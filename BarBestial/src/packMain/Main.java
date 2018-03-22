@@ -1,4 +1,4 @@
-package main;
+package packMain;
 
 public class Main {
 
