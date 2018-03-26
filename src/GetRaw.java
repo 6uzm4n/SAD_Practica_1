@@ -6,10 +6,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-//TODO: Documentar bien todos los mÃ©todos (JavaDoc).
 public class GetRaw {
 	/**
-	 * Crea un archivo arff a partir de un archivo de texto (raw).
+	 * Crea un archivo arff a partir de un directorio de ficheros (raw).
 	 *
 	 * @param args
 	 *            ParÃ¡metros de entrada
@@ -24,7 +23,7 @@ public class GetRaw {
 			System.out.println("-Este programa tiene como función obtener un fichero .arff en formato Raw para su uso en minería de datos.\n");
 			System.out.println("Precondiciones: el primer argumento será el path de la raíz del árbol de directorios a convertir. El segundo es el path del fichero de salida .arff\n");
 			System.out.println("Postcondiciones: el resultado de esta aplicación será la creación de un fichero .arff en el path especificado en los argumentos\n");
-			System.out.println("Lista de argumentos:\n"+"- Path de la raíz del árbol de directorios a convertir.\n"+"- Path del destino donde se guardará el fichero resultante tras la ejecución");
+			System.out.println("Lista de argumentos:\n"+"- Path de la raíz del árbol de directorios a convertir.\n"+"- Path del destino donde se guardará el fichero resultante tras la ejecución\n");
 			System.out.println("Ejemplo de una correcta ejecución: java -jar getRaw.jar train train.arff");
 			System.exit(1);
 		}else {
