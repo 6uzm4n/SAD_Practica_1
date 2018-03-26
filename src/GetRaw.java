@@ -1,10 +1,14 @@
 import weka.core.Instances;
+import weka.core.converters.ArffSaver;
+import weka.core.converters.CSVLoader;
 import weka.core.converters.TextDirectoryLoader;
+import weka.filters.Filter;
+import weka.filters.unsupervised.attribute.NominalToString;
+import weka.filters.unsupervised.attribute.Remove;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class GetRaw {
 	/**
@@ -13,51 +17,138 @@ public class GetRaw {
 	 * @param args
 	 *            Par√°metros de entrada
 	 * @throws IOException
-	 *             Si no se puede leer o escribir un archivo.
+     *             Si no se puede leer o escribir un archivo.
 	 */
 	public static void main(String[] args) throws IOException {
-		String pathIn = null;
-		String pathOut = null;
-		if (args.length==0){
-			System.out.println("Este programa necesita que introduzcas 2 argumentos para funcionar correctamente\n");
-			System.out.println("-Este programa tiene como funciÛn obtener un fichero .arff en formato Raw para su uso en minerÌa de datos.\n");
-			System.out.println("Precondiciones: el primer argumento ser· el path de la raÌz del ·rbol de directorios a convertir. El segundo es el path del fichero de salida .arff\n");
-			System.out.println("Postcondiciones: el resultado de esta aplicaciÛn ser· la creaciÛn de un fichero .arff en el path especificado en los argumentos\n");
-			System.out.println("Lista de argumentos:\n"+"- Path de la raÌz del ·rbol de directorios a convertir.\n"+"- Path del destino donde se guardar· el fichero resultante tras la ejecuciÛn\n");
-			System.out.println("Ejemplo de una correcta ejecuciÛn: java -jar getRaw.jar train train.arff");
-			System.exit(1);
-		}else {
-		try {
-			pathIn = args[0];
-			pathOut = args[1];
-		} catch (IndexOutOfBoundsException e) {
 
-			System.out.println("Error en el input. Revise su sintaxis.");
-			System.exit(1);
-		}
+        if (args.length == 3 && args[0].equals("-d")) {
+            String pathIn = args[1];
+            String pathOut = args[2];
+            getRawDirectory(pathIn, pathOut);
+        }else if (args.length == 3 && args[0].equals("-c")) {
+            String pathIn = args[1];
+            String pathOut = args[2];
+            getRawCSV(pathIn, pathOut);
+        }else if (args.length == 3 && args[0].equals("-p")) {
+            String pathIn = args[1];
+            String pathOut = args[2];
+            getRawPlain(pathIn, pathOut);
+        }else if (args.length == 0) {
+            System.out.println("=====GET RAW=====");
+            System.out.println("Este programa tiene como funci√≥n obtener un fichero .arff para su uso en miner√≠a de datos " +
+                    "a partir de diversos tipos de archivos.");
+            System.out.println("Este programa necesita que introduzcas 3 argumentos para funcionar correctamente.");
+            System.out.println("PRECONDICIONES:\nEl primer argumento ser√° el path de la ra√≠z del √°rbol de directorios a " +
+                    "convertir. El segundo es el path del fichero de salida \".arff\".");
+            System.out.println("POSTCONDICIONES:\nEl resultado de esta aplicaci√≥n ser√° la creaci√≥n de un fichero .arff " +
+                    "en el path especificado en los argumentos\n");
+            System.out.println("Lista de argumentos:\n--Opci√≥n para el input:\n   -d\tLa estructura de los ficheros es por directorios." +
+                    "\n   -c\tEl fichero est√° en formato CSV.\n   -p\tEl fichero est√° en texto plano.\n" +
+                    "-- Path de la ra√≠z del fichero o √°rbol de directorios a convertir." +
+                    "\n-- Path del destino donde se guardar√° el fichero resultante tras la ejecuci√≥n");
+            System.out.println("Ejemplo de una correcta ejecuci√≥n: java -jar getRaw.jar -d /path/to/file /path/to/newAfrff.arff");
+            System.exit(0);
+        }else{
+            System.out.println("Error en el input. Revise su sintaxis.");
+            System.exit(1);
+	    }
 
-		getRaw(pathIn, pathOut);
-	}
-	}
+    }
 
 	/**
-     * Este m√©todo crea un archivo arff en la ruta pathOut a partir del archivo de texto raw le√≠do en la ruta pathIn.
+     * Este m√©todo crea un archivo arff en la ruta pathOut a partir del directorio de archivos de texto raw le√≠do en la
+     * ruta pathIn.
      *
-     * @param pathIn        Ruta en la que est√° ubicado el archivo raw.
+     * @param pathIn        Ruta en la que est√° ubicado el directorio de archivos raw.
      * @param pathOut       Ruta en la que se crea el nuevo archivo arff,
      * @throws IOException  Si no se puede leer o escribir un archivo.
      */
-    private static void getRaw (String pathIn, String pathOut) throws IOException {
-        //Carga y lectura del archivo raw.
+    private static void getRawDirectory (String pathIn, String pathOut) throws IOException {
+        //Carga y lectura del directorio de archivos de texto plano.
         TextDirectoryLoader loader = new TextDirectoryLoader();
         loader.setDirectory(new File(pathIn));
-        Instances raw = loader.getDataSet();
-        raw.renameAttribute(raw.classIndex(), "text");
-        raw.setRelationName("class");
+        Instances instances = loader.getDataSet();
+        instances.renameAttribute(instances.classIndex(), "text");
+        instances.setRelationName("class");
 
-        //Creaci√≥n del archivo arff.
-        BufferedWriter bw = new BufferedWriter(new FileWriter(pathOut));
-        bw.write(raw.toString());
-        bw.close();
+        //Creaci?n del archivo arff.
+        saveModel(instances, pathOut);
+    }
+
+    private static void getRawCSV (String pathIn, String pathOut){
+        //Este m?todo est? personalizado para el archivo de pruebas "Tweets", por lo que no es ?til con otros archivos.
+        try{
+            int classIndex = 1;
+            String tmpCSV = parseCSV(pathIn);
+            CSVLoader loader = new CSVLoader();
+            loader.setSource(new File(tmpCSV));
+            Files.delete(Paths.get(tmpCSV));
+            Instances instances = loader.getDataSet();
+            instances.setClassIndex(classIndex);
+
+            //Damos forma a las instancias
+            instances.setRelationName("Tweets");
+            instances.renameAttribute(classIndex, "class");
+
+            //Eliminamos atributos que no aportan informaci?n.
+            Remove remove = new Remove();
+            remove.setAttributeIndicesArray(new int[]{0, 2, 3});
+            remove.setInputFormat(instances);
+            instances = Filter.useFilter(instances, remove);
+
+            //Hacemos que Weka detecte el texto del Tweet como un String
+            NominalToString stringFilter = new NominalToString();
+            stringFilter.setAttributeIndexes("last");
+            stringFilter.setInputFormat(instances);
+            instances = Filter.useFilter(instances, stringFilter);
+
+            saveModel(instances, pathOut);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private static void getRawPlain (String pathIn, String pathOut) throws IOException{
+        BufferedReader reader = new BufferedReader(new FileReader(new File(pathIn)));
+        PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(new File(pathOut))));
+        writer.println("@relation SMS_Classifier\n\n@attribute Text SMS\n@attribute class {ham, spam}\n\n@data");
+        String lineIterator;
+        while ((lineIterator = reader.readLine()) != null){
+            String[] line = lineIterator.split("//t");
+            if(line.length==2) {
+                String instanceClass = line[0];
+                String instanceText = line[1];
+                instanceText = weka.core.Utils.quote(instanceText);
+                writer.println(instanceText + "," + instanceClass);
+            }else{
+                String instanceText = line[0];
+                instanceText = weka.core.Utils.quote(instanceText);
+                writer.println(instanceText + "," + "");//TODO: No s? qu? se pone al desconocer la clase.
+            }
+            writer.close();
+        }
+    }
+
+    private static String parseCSV (String path){
+        String newPath = "/tmp/" + path.split("/")[path.split("/").length - 1];
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(new File(path)));
+            PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(new File(newPath))));
+            //TODO: Implementar toda la limpieza de del CSV.
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return newPath;
+    }
+
+    private static void saveModel (Instances instances, String pathOut) {
+        try {
+            ArffSaver arffSaver = new ArffSaver();
+            arffSaver.setInstances(instances);
+            arffSaver.setFile(new File(pathOut));
+            arffSaver.writeBatch();
+         }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
