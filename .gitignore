@@ -1,0 +1,9 @@
+# Archivos creados por Eclipse
+.project
+.classpath
+/bin
+/out
+
+# Archivos creados por IntelliJ Idea
+.idea
+*.iml
