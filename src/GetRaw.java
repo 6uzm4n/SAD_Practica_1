@@ -72,7 +72,7 @@ public class GetRaw {
         instances.setRelationName("class");
 
         //Creaci?n del archivo arff.
-        saveModel(instances, pathOut);
+        saveArff(instances, pathOut);
     }
 
     private static void getRawCSV (String pathIn, String pathOut){
@@ -102,7 +102,7 @@ public class GetRaw {
             stringFilter.setInputFormat(instances);
             instances = Filter.useFilter(instances, stringFilter);
 
-            saveModel(instances, pathOut);
+            saveArff(instances, pathOut);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -141,7 +141,7 @@ public class GetRaw {
         return newPath;
     }
 
-    private static void saveModel (Instances instances, String pathOut) {
+    private static void saveArff (Instances instances, String pathOut) {
         try {
             ArffSaver arffSaver = new ArffSaver();
             arffSaver.setInstances(instances);
