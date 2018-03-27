@@ -1,5 +1,4 @@
 import weka.core.Instances;
-import weka.core.converters.ArffSaver;
 import weka.core.converters.CSVLoader;
 import weka.core.converters.TextDirectoryLoader;
 import weka.filters.Filter;
@@ -72,11 +71,11 @@ public class GetRaw {
         instances.setRelationName("class");
 
         //Creaci?n del archivo arff.
-        saveArff(instances, pathOut);
+        Utils.saveArff(instances, pathOut);
     }
 
     private static void getRawCSV (String pathIn, String pathOut){
-        //Este m?todo est? personalizado para el archivo de pruebas "Tweets", por lo que no es ?til con otros archivos.
+        //Este método está personalizado para el archivo de pruebas "Tweets", por lo que no es útil con otros archivos.
         try{
             int classIndex = 1;
             String tmpCSV = parseCSV(pathIn);
@@ -102,7 +101,7 @@ public class GetRaw {
             stringFilter.setInputFormat(instances);
             instances = Filter.useFilter(instances, stringFilter);
 
-            saveArff(instances, pathOut);
+            Utils.saveArff(instances, pathOut);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -139,16 +138,5 @@ public class GetRaw {
             e.printStackTrace();
         }
         return newPath;
-    }
-
-    private static void saveArff (Instances instances, String pathOut) {
-        try {
-            ArffSaver arffSaver = new ArffSaver();
-            arffSaver.setInstances(instances);
-            arffSaver.setFile(new File(pathOut));
-            arffSaver.writeBatch();
-         }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 }

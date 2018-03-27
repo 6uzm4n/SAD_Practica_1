@@ -1,15 +1,11 @@
-import java.io.File;
-import java.io.IOException;
-
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.Standardize;
-import weka.core.converters.ArffSaver;
 import weka.core.converters.ConverterUtils.DataSource;
 
 public class MakeCompatible {
 	/**
-	 * Hace compatible un conjunto de evaluación representandolo en un espacio de
+	 * Hace compatible un conjunto de evaluaciï¿½n representandolo en un espacio de
 	 * atributos compatible con el del entrenamiento
 	 *
 	 * @param args
@@ -22,16 +18,16 @@ public class MakeCompatible {
 		if (args.length == 0) {
 			System.out.println("=====MAKE COMPATIBLE=====");
 			System.out.println(
-					"Este programa tiene como funciÃ³n hacer que un conjunto de evaluación dado sea compatible con un conjunto de entrenamiento dado.");
+					"Este programa tiene como funciÃ³n hacer que un conjunto de evaluaciï¿½n dado sea compatible con un conjunto de entrenamiento dado.");
 			System.out.println("Este programa necesita que introduzcas 3 argumentos para funcionar correctamente.");
 			System.out.println(
 					"PRECONDICIONES:\nEl primer argumento serÃ¡ el path del conjunto de entrenamiento con el que comparar. "
-							+ "El segundo es el path del conjunto de evaluación que se debe hacer compatible. Mientras que el tercero será el path de la salida para este nuevo conjunto de datos compatible.");
+							+ "El segundo es el path del conjunto de evaluaciï¿½n que se debe hacer compatible. Mientras que el tercero serï¿½ el path de la salida para este nuevo conjunto de datos compatible.");
 			System.out.println(
 					"POSTCONDICIONES:\nEl resultado de esta aplicaciÃ³n serÃ¡ la creaciÃ³n de un fichero .arff "
-							+ "que contiene un conjunto de datos de evauación compatible con el del entrenamiento\n");
+							+ "que contiene un conjunto de datos de evauaciï¿½n compatible con el del entrenamiento\n");
 			System.out.println("Lista de argumentos:\n" + "-- Path del conjunto de entrenamiento con el que comparar."
-					+ "\n-- Path de la raÃ­z del fichero .arff de evaluación a convertir."
+					+ "\n-- Path de la raÃ­z del fichero .arff de evaluaciï¿½n a convertir."
 					+ "\n-- Path del destino donde se guardarÃ¡ el fichero .arff resultante tras la ejecuciÃ³n");
 			System.out.println(
 					"Ejemplo de una correcta ejecuciÃ³n: java -jar MakeCompatible.jar /path/to/train.arff /path/to/test.arff /path/to/newArff.arff");
@@ -68,29 +64,8 @@ public class MakeCompatible {
 			}
 			Instances newTrain = Filter.useFilter(train, filter);
 			Instances newTest = Filter.useFilter(test, filter);
-			saveArff(newTest, pathOut);
+			Utils.saveArff(newTest, pathOut);
 		}
-	}
-
-	/**
-	 * Guarda las instancias que se le pasan como parametro en la ruta especificada
-	 * en formato .arff
-	 *
-	 * @param instances
-	 *            Conjunto de instancias a convertir y guardar en el fichero .arff
-	 * @param pathOut
-	 *            Ruta donde se guardará el fichero resultante de la conversión
-	 */
-	private static void saveArff(Instances instances, String pathOut) {
-		try {
-			ArffSaver arffSaver = new ArffSaver();
-			arffSaver.setInstances(instances);
-			arffSaver.setFile(new File(pathOut));
-			arffSaver.writeBatch();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 }
