@@ -64,7 +64,7 @@ public class MakeCompatible {
 			}
 			Instances newTrain = Filter.useFilter(train, filter);
 			Instances newTest = Filter.useFilter(test, filter);
-			Utils.saveArff(newTest, pathOut);
+			Utilities.saveArff(newTest, pathOut);
 		}
 	}
 

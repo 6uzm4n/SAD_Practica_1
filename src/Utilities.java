@@ -12,7 +12,7 @@ import java.io.File;
  * @param pathOut
  *            Ruta donde se guardar� el fichero resultante de la conversi�n
  */
-public class Utils {
+public class Utilities {
     public static void saveArff (Instances instances, String pathOut) {
         try {
             ArffSaver arffSaver = new ArffSaver();

@@ -1,4 +1,5 @@
 import weka.core.Instances;
+import weka.core.Utils;
 import weka.core.converters.CSVLoader;
 import weka.core.converters.TextDirectoryLoader;
 import weka.filters.Filter;
@@ -8,6 +9,7 @@ import weka.filters.unsupervised.attribute.Remove;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
 
 public class GetRaw {
 	/**
@@ -67,27 +69,29 @@ public class GetRaw {
         TextDirectoryLoader loader = new TextDirectoryLoader();
         loader.setDirectory(new File(pathIn));
         Instances instances = loader.getDataSet();
-        instances.renameAttribute(instances.classIndex(), "text");
         instances.setRelationName("class");
 
         //Creaci?n del archivo arff.
-        Utils.saveArff(instances, pathOut);
+        Utilities.saveArff(instances, pathOut);
     }
 
     private static void getRawCSV (String pathIn, String pathOut){
         //Este método está personalizado para el archivo de pruebas "Tweets", por lo que no es útil con otros archivos.
         try{
             int classIndex = 1;
+            int tweetIndex = 4;
             String tmpCSV = parseCSV(pathIn);
             CSVLoader loader = new CSVLoader();
             loader.setSource(new File(tmpCSV));
-            Files.delete(Paths.get(tmpCSV));
             Instances instances = loader.getDataSet();
             instances.setClassIndex(classIndex);
+            Files.delete(Paths.get(tmpCSV));
+
 
             //Damos forma a las instancias
             instances.setRelationName("Tweets");
-            instances.renameAttribute(classIndex, "class");
+            instances.renameAttribute(classIndex, "class");//Atributo de la clase.
+            instances.renameAttribute(tweetIndex, "tweet");//Atributo en el que se encuentra texto del tweet.
 
             //Eliminamos atributos que no aportan informaci?n.
             Remove remove = new Remove();
@@ -101,7 +105,7 @@ public class GetRaw {
             stringFilter.setInputFormat(instances);
             instances = Filter.useFilter(instances, stringFilter);
 
-            Utils.saveArff(instances, pathOut);
+            Utilities.saveArff(instances, pathOut);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -113,7 +117,7 @@ public class GetRaw {
         writer.println("@relation SMS_Classifier\n\n@attribute Text SMS\n@attribute class {ham, spam}\n\n@data");
         String lineIterator;
         while ((lineIterator = reader.readLine()) != null){
-            String[] line = lineIterator.split("//t");
+            String[] line = lineIterator.split("\t");
             if(line.length==2) {
                 String instanceClass = line[0];
                 String instanceText = line[1];
@@ -122,21 +126,59 @@ public class GetRaw {
             }else{
                 String instanceText = line[0];
                 instanceText = weka.core.Utils.quote(instanceText);
-                writer.println(instanceText + "," + "");//TODO: No s? qu? se pone al desconocer la clase.
+                writer.println(instanceText + "," + "?");//TODO: Igual no es la interrogación, hay que revisar.
             }
-            writer.close();
         }
+        writer.close();
     }
 
     private static String parseCSV (String path){
         String newPath = "/tmp/" + path.split("/")[path.split("/").length - 1];
         try {
             BufferedReader reader = new BufferedReader(new FileReader(new File(path)));
-            PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(new File(newPath))));
-            //TODO: Implementar toda la limpieza de del CSV.
+            BufferedWriter writer = new BufferedWriter(new FileWriter(newPath));
+            String result = "";
+            String header = reader.readLine();
+            String[] headers = getValuesCSV(header);
+            int numHeaders = headers.length;
+            String lineIterator;
+            String[] lineValues;
+            while ((lineIterator = reader.readLine()) != null) {
+                if (!lineIterator.equals("")) {
+                    lineValues = getValuesCSV(lineIterator);
+                    if (lineValues.length == numHeaders) {
+                        String[] cleanValues = new String[numHeaders];
+                        for (int i = 0; i < lineValues.length; i++) {
+                            cleanValues[i] = Utils.quote(lineValues[i]);
+                            if (!cleanValues[i].startsWith("\'")) {
+                                cleanValues[i] = "\'" + cleanValues[i];
+                            }
+                            if (!cleanValues[i].endsWith("\'")) {
+                                cleanValues[i] = cleanValues[i] + "\'";
+                            }
+                        }
+                        result += (String.join(",", cleanValues) + "\n");
+                    }
+                }
+            }
+            writer.write(result);
+            writer.flush();
+            writer.close();
         }catch (Exception e){
             e.printStackTrace();
         }
         return newPath;
+    }
+
+    private static String[] getValuesCSV (String line){
+        String[] splitedLine;
+        if (line.charAt(0) == '\"'){
+            line = line.substring(1);
+        }
+        if (line.charAt(line.length()-1) == '\"'){
+            line = line.substring(0, line.length()-1);
+        }
+        splitedLine = line.split("\",\"");
+        return splitedLine;
     }
 }
