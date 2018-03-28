@@ -75,7 +75,14 @@ public class GetRaw {
         Utilities.saveArff(instances, pathOut);
     }
 
-    private static void getRawCSV (String pathIn, String pathOut){
+    /**
+     * Este método crea un archivo arff en la ruta pathOut a partir del archivo CSV que se encuentra en la ruta pathIn.
+     *
+     * @param pathIn        Ruta en la que está ubicado el directorio de archivos raw.
+     * @param pathOut       Ruta en la que se crea el nuevo archivo arff,
+     * @throws IOException  Si no se puede leer o escribir un archivo.
+     */
+    private static void getRawCSV (String pathIn, String pathOut) throws IOException{
         //Este método está personalizado para el archivo de pruebas "Tweets", por lo que no es útil con otros archivos.
         try{
             int classIndex = 1;
@@ -111,6 +118,14 @@ public class GetRaw {
         }
     }
 
+    /**
+     * Este método crea un archivo arff en la ruta pathOut a partir del archivo de texto plano que se encuentra en la
+     * ruta pathIn.
+     *
+     * @param pathIn        Ruta en la que está ubicado el archivo de texto plano.
+     * @param pathOut       Ruta en la que se crea el nuevo archivo arff,
+     * @throws IOException  Si no se puede leer o escribir un archivo.
+     */
     private static void getRawPlain (String pathIn, String pathOut) throws IOException{
         BufferedReader reader = new BufferedReader(new FileReader(new File(pathIn)));
         PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(new File(pathOut))));
@@ -132,6 +147,13 @@ public class GetRaw {
         writer.close();
     }
 
+    /**
+     * Este método limpia y corrige el contenido de un fichero CSV y guarda el resultado en un nuevo archivo ubicado
+     * en el directorio /tmp/. Devuelve el path del nuevo archivo creado.
+     *
+     * @param path      Ruta en la que está ubicado el fichero CSV que se desea limpiar.
+     * @return          Ruta en la que está ubicado el nuevo fichero CSV limpio.
+     */
     private static String parseCSV (String path){
         String newPath = "/tmp/" + path.split("/")[path.split("/").length - 1];
         try {
@@ -170,6 +192,13 @@ public class GetRaw {
         return newPath;
     }
 
+    /**
+     * Este método lee los valores que contiene una linea de texto en formato CSV y los devuelve como un array de datos
+     * en formato String.
+     *
+     * @param line      Linea en formato CSV de la que se quieren leer los datos.
+     * @return          Array de Strings que contiene los valores de la liena leída.
+     */
     private static String[] getValuesCSV (String line){
         String[] splitedLine;
         if (line.charAt(0) == '\"'){
