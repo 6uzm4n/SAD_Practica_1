@@ -1,5 +1,9 @@
+package Entrega1;
+
+import Utilities.CommonUtilities;
 
 import java.io.File;
+
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.*;
@@ -33,10 +37,10 @@ public class TransformRaw {
 			System.out.println("Lista de argumentos:\n" + "-- Path del conjunto de entrenamiento a transformar."
 					+ "\n-- Path de salida." + "\n-- Opci�n BoW o TF�IDF" + "\n-- Opci�n Sparse o NonSparse"+"\n-- Path del diccionario generado");
 			System.out.println(
-					"Ejemplo de una correcta ejecuci�n: java -jar TransformRaw.jar /path/to/train.arff /path/to/trainBOW.arff BOW NonSparse /path/to/diccionario");
+					"Ejemplo de una correcta ejecuci�n: java -jar Entrega1.TransformRaw.jar /path/to/train.arff /path/to/trainBOW.arff BOW NonSparse /path/to/diccionario");
 			System.exit(0);
 		} else {
-			Instances data = Utilities.loadArff(args[0]);
+			Instances data = CommonUtilities.loadArff(args[0]);
 			data.setClassIndex(data.numAttributes() - 1);
 			String pathDicc= args[4];
 			StringToWordVector filter = null;
@@ -78,7 +82,7 @@ public class TransformRaw {
 			/*
 			 * guardamos los datos en el path especificado
 			 */
-            Utilities.saveArff(dataFiltered, args[1]);
+            CommonUtilities.saveArff(dataFiltered, args[1]);
 		}
 
 	}
