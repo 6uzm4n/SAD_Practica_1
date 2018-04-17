@@ -1,11 +1,12 @@
+package Entrega1;
+
+import Utilities.CommonUtilities;
+
 import java.io.File;
 
-import weka.classifiers.Classifier;
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.FixedDictionaryStringToWordVector;
-import weka.filters.unsupervised.attribute.Standardize;
-import weka.filters.unsupervised.attribute.StringToWordVector;
 import weka.core.converters.ConverterUtils.DataSource;
 
 public class MakeCompatible {
@@ -34,7 +35,7 @@ public class MakeCompatible {
 					+ "\n-- Path de la raíz del fichero .arff de evaluaci�n a convertir."
 					+ "\n-- Path del destino donde se guardará el fichero .arff resultante tras la ejecución");
 			System.out.println(
-					"Ejemplo de una correcta ejecución: java -jar MakeCompatible.jar /path/to/train.arff /path/to/test.arff /path/to/newArff.arff /path/to/diccionario");
+					"Ejemplo de una correcta ejecución: java -jar Entrega1.MakeCompatible.jar /path/to/train.arff /path/to/test.arff /path/to/newArff.arff /path/to/diccionario");
 			System.exit(0);
 		} else if (args.length != 3) {
 			System.out.println("Error en el input. Revise su sintaxis.");
@@ -62,7 +63,7 @@ public class MakeCompatible {
 			fixedFilter.setInputFormat(test);
 			Instances newTest = Filter.useFilter(test, fixedFilter);
 
-			Utilities.saveArff(newTest, pathOut);
+			CommonUtilities.saveArff(newTest, pathOut);
 		}
 	}
 

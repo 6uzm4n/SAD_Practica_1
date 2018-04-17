@@ -1,3 +1,5 @@
+package Utilities;
+
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 
@@ -8,7 +10,7 @@ import java.io.IOException;
 
 
 
-public class Utilities {
+public class CommonUtilities {
     /**
      * Cargamos las instancias del fichero
      *

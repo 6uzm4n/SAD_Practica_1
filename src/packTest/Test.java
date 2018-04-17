@@ -1,4 +1,8 @@
+package packTest;
 import java.io.IOException;
+
+import Entrega1.*;
+import Entrega2.*;
 
 public class Test {
 	//For testingggg
@@ -26,7 +30,7 @@ public class Test {
 		
 		try {
 		//	GetRaw.main(array);
-			//TransformRaw.main(array1);
+			TransformRaw.main(array1);
 		//	MakeCompatible.main(array2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

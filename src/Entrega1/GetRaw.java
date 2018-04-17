@@ -1,3 +1,7 @@
+package Entrega1;
+
+import Utilities.CommonUtilities;
+
 import weka.core.Instances;
 import weka.core.Utils;
 import weka.core.converters.CSVLoader;
@@ -72,7 +76,7 @@ public class GetRaw {
         instances.setRelationName("class");
 
         //Creaci?n del archivo arff.
-        Utilities.saveArff(instances, pathOut);
+        CommonUtilities.saveArff(instances, pathOut);
     }
 
     /**
@@ -112,7 +116,7 @@ public class GetRaw {
             stringFilter.setInputFormat(instances);
             instances = Filter.useFilter(instances, stringFilter);
 
-            Utilities.saveArff(instances, pathOut);
+            CommonUtilities.saveArff(instances, pathOut);
         }catch (Exception e){
             e.printStackTrace();
         }
