@@ -9,6 +9,19 @@ import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.FixedDictionaryStringToWordVector;
 
 public class MakeCompatibleFss {
+	/**
+	 * Hace compatible un conjunto de evaluacion representandolo en un espacio de
+	 * atributos compatible con el del diccionario pasado como parametro
+	 *
+	 * @param args
+	 *            Parámetros de entrada
+	 *            	args[0] - ruta del fichero .arff sobre la cual se quiere trabajar
+	 *            	args[1] - ruta del fichero .arff de salida
+	 *            	args[2] - ruta del diccionario
+	 * @throws IOException
+	 *             Si no se pueden obtener correctamente las instancias a partir de
+	 *             los ficheros de entrada
+	 */
 
 	public static void main(String[] args) throws IOException {
 		String pathDev = null;
