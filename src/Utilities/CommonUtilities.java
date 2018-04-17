@@ -1,5 +1,7 @@
 package Utilities;
 
+import weka.classifiers.Classifier;
+import weka.core.SerializationHelper;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.ConverterUtils.DataSource;
@@ -66,26 +68,34 @@ public class CommonUtilities {
 	 * Carga las instancias del fichero situado en pPath. Se establece pClassIndex
 	 * como el índice de la clase. -1 indica que la clase es el último atributo.
 	 *
-	 * @param pPath
+	 * @param path
 	 *            ruta del fichero .arff
-	 * @param pClassIndex
+	 * @param classIndex
 	 *            índice del atributo clase
 	 * @return un objeto de tipo Instances con las instancias del fichero, en caso
 	 *         de error al cargar los datos, devuelve null
 	 */
-	public static Instances loadInstances(String pPath, int pClassIndex) {
+	public static Instances loadInstances(String path, int classIndex) {
 		Instances instances = null;
 		try {
-			DataSource ds = new DataSource(pPath);
+			DataSource ds = new DataSource(path);
 			instances = ds.getDataSet();
-			if (pClassIndex >= 0)
-				instances.setClassIndex(pClassIndex);
+			if (classIndex >= 0)
+				instances.setClassIndex(classIndex);
 			else
 				instances.setClassIndex(instances.numAttributes() - 1);
 		} catch (Exception e) {
-			System.out.println(String.format("Error al cargar las instancias de %s", pPath));
+			System.out.println(String.format("Error al cargar las instancias de %s", path));
 			e.printStackTrace();
 		}
 		return instances;
+	}
+
+	public static void saveModel(Classifier classifier, String pathOut){
+		try {
+			SerializationHelper.write(pathOut, classifier);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
