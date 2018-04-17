@@ -29,6 +29,7 @@ public class CommonUtilities {
 			file = new FileReader(path);
 		} catch (FileNotFoundException e) {
 			System.out.println("ERROR: Comprueba el path del fichero: " + path);
+			System.exit(1);
 		}
 
 		Instances data = null;
@@ -37,6 +38,7 @@ public class CommonUtilities {
 			data = new Instances(file);
 		} catch (IOException e) {
 			System.out.println("ERROR: Comprueba el path del fichero: " + path);
+			System.exit(1);
 		}
 
 		file.close();
@@ -98,4 +100,25 @@ public class CommonUtilities {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Carga las instancias de las que obtendremos el �ndice de la clase minoritaria
+	 * 
+	 * @param pInstances
+	 * Instancias de las que se obtendr� el �ncide de la clase minoritaria
+	 * @return
+	 * �ndice de la clase minoritaria
+	 */
+	public static int getMinorityClassIndex(Instances pInstances){
+        int[] nomCounts = pInstances.attributeStats(pInstances.classIndex()).nominalCounts;
+        int minClassAmount = -1;
+        int minClassIndex = -1;
+        for(int i = 0; i < nomCounts.length; i++) {
+            if (minClassAmount < 0 || nomCounts[i] < minClassAmount) {
+                minClassAmount = nomCounts[i];
+                minClassIndex = i;
+            }
+        }
+        return minClassIndex;
+    }
 }
