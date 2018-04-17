@@ -4,48 +4,49 @@ import java.io.File;
 import java.io.IOException;
 
 import Utilities.CommonUtilities;
+import weka.attributeSelection.InfoGainAttributeEval;
+import weka.attributeSelection.Ranker;
 import weka.core.Instances;
 import weka.filters.Filter;
+import weka.filters.supervised.attribute.AttributeSelection;
 import weka.filters.unsupervised.attribute.FixedDictionaryStringToWordVector;
+import weka.filters.unsupervised.attribute.StringToWordVector;
 
 public class MakeCompatibleFss {
 	/**
 	 * Hace compatible un conjunto de evaluacion representandolo en un espacio de
-	 * atributos compatible con el del diccionario pasado como parametro
+	 * atributos compatible con el del conjunto de entrenamiento y o guarda en la
+	 * ruta especificada
 	 *
 	 * @param args
-	 *            Parámetros de entrada
-	 *            	args[0] - ruta del fichero .arff sobre la cual se quiere trabajar
-	 *            	args[1] - ruta del fichero .arff de salida
-	 *            	args[2] - ruta del diccionario
+	 *            Parámetros de entrada -args[0] - ruta del fichero .arff que se
+	 *            debe tomar como referencia -args[1] - ruta del fichero .arff que
+	 *            se quiere hacer compatible -args[2] - ruta del fichero .arff
+	 *            compatible que se desea generar
 	 * @throws IOException
 	 *             Si no se pueden obtener correctamente las instancias a partir de
 	 *             los ficheros de entrada
 	 */
-
 	public static void main(String[] args) throws IOException {
-		String pathDev = null;
-	//	String pathTrain = null;
-		String pOutDev = null;
-		String pathDicc = null;
+		String pathFss = null;
+		String pathBoW = null;
+		String pathNewFss = null;
 		try {
-			pathDev = args[0];
-		//	pathTrain = args[1];
-			pOutDev = args[1];
-			pathDicc = args[2];
+			pathFss = args[0];
+			pathBoW = args[1];
+			pathNewFss = args[2];
 		} catch (IndexOutOfBoundsException e) {
 			String q = "Este programa hace que el espacio de atributos del conjunto de evaluacion sea compatible con el de entrenamiento\n"
 					+ "El fichero .arff a convertir debe tener al menos un atributo de tipo String.\n"
-					+ "Este programa espera 3 argumentos:\n" + "\t1 - Ruta del fichero .arff a convertir\n"
-			//		+ "\t2 - Ruta del fichero .arff que se toma como modelo\n"
-					+ "\t2 - Ruta del fichero .arff compatible de salida\n"
-					+ "\t3 - Ruta del diccionario\n"
-					+ "\nEjemplo: java -jar MakeCompatibleFss.jar /path/to/input/dev /path/to/output/devCompatible path/to/input/diccionario";
+					+ "Este programa espera 3 argumentos:\n" + "\t1 - Ruta del fichero .arff de referencia\n"
+					+ "\t2 - Ruta del fichero .arff para compatibilizar\n"
+					+ "\t3 - Ruta del fichero .arff compatible de salida\n"
+					+ "\nEjemplo: java -jar MakeCompatibleFss.jar /path/to/input/trainFss /path/to/input/dev path/to/output/devCompatible";
 			System.out.println(q);
 			System.exit(1);
 		}
 		try {
-			makeCompatible(pathDev, pOutDev, pathDicc);
+			makeCompatible(pathFss, pathBoW, pathNewFss);
 		} catch (Exception e) {
 
 			System.out.println("Argumentos incorrectos");
@@ -54,27 +55,34 @@ public class MakeCompatibleFss {
 	}
 
 	/**
-	 * Utiliza un diccionario para convertir los atributos String de un fichero
-	 * .arff a Word Vector
+	 * Aplica el mismo filtro que se ha aplicado al conjunto de entrenamiento de
+	 * entrada al conjunto de evaluacion pasado como parametro y lo guarda en la
+	 * ruta especificada
 	 *
-	 * @param pathInDev
-	 *            ruta del fichero .arff a convertir
-	 * @param pathOutDev
-	 *            ruta del fichero .arff a generar
-	 * @param pathDicc
-	 *            ruta del diccionario que se usa como modelo
+	 * @param pathInFss
+	 *            ruta del fichero .arff referencia
+	 * @param pathInBoW
+	 *            ruta del fichero .arff a compatibilizar
+	 * @param pathOut
+	 *            ruta del fichero .arff generado de salida
 	 * @throws IOException
 	 */
-	private static void makeCompatible(String pathInDev, String pathOutDev, String pathDicc) throws Exception {
-		//Instances train = Utilities.CommonUtilities.loadInstances(pathTrain, 0);
-		Instances dev = Utilities.CommonUtilities.loadInstances(pathInDev, 0);
+	private static void makeCompatible(String pathInFss, String pathInBoW, String pathOut) throws Exception {
+		Instances train = Utilities.CommonUtilities.loadInstances(pathInFss, 0);
+		Instances dev = Utilities.CommonUtilities.loadInstances(pathInBoW, 0);
 		
-		FixedDictionaryStringToWordVector fixedFilter = new FixedDictionaryStringToWordVector();
-		fixedFilter.setDictionaryFile(new File(pathDicc));
-		fixedFilter.setInputFormat(dev);
-		Instances newTest = Filter.useFilter(dev, fixedFilter);
+		AttributeSelection attSel = new AttributeSelection();
+		
+		Instances newDev = null;
+		Instances newTrain = null;
+		
+		attSel.setInputFormat(train);
+		newTrain = Filter.useFilter(train, attSel);
+		newDev = Filter.useFilter(dev, attSel);
+		newDev.setClassIndex(newDev.numAttributes() - 1);
+		
+		CommonUtilities.saveArff(newDev, pathOut);
 
-		CommonUtilities.saveArff(newTest, pathOutDev);
 	}
 
 }

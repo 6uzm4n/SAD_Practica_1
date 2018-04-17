@@ -13,12 +13,12 @@ public class FssInfoGain {
 	/**
 	 * FssInfoGain sirve para realizar una seleccion de atributos dado un conjunto
 	 * de datos en un fichero .arff, y genera uno nuevo una vez realizada esta
-	 * selección. La selección de atributos consiste en la eliminación de atributos redundante e irrelevantes.
+	 * selección. La selección de atributos consiste en la eliminación de atributos
+	 * redundante e irrelevantes.
 	 *
 	 * @param args
-	 *            Parámetros de entrada
-	 *            	args[0] - ruta del fichero .arff sobre la cual se quiere trabajar
-	 *            	args[1] - ruta del fichero .arff de salida
+	 *            Parámetros de entrada args[0] - ruta del fichero .arff sobre la
+	 *            cual se quiere trabajar args[1] - ruta del fichero .arff de salida
 	 */
 	public static void main(String[] args) {
 		String trainBow = null;
@@ -42,10 +42,10 @@ public class FssInfoGain {
 		Instances datos = Utilities.CommonUtilities.loadInstances(trainBow, 0);
 		System.out.println("index: " + datos.classIndex());
 		try {
-			Instances filtrado = useFilter(datos);
+			Instances newData = useFilter(datos);
 
 			ArffSaver saver = new ArffSaver();
-			saver.setInstances(filtrado);
+			saver.setInstances(newData);
 			saver.setFile(new File(trainBowFss));
 			saver.writeBatch();
 
@@ -68,8 +68,7 @@ public class FssInfoGain {
 		AttributeSelection attSel = new AttributeSelection();
 		Ranker rank = new Ranker();
 		boolean stop = false;
-		double th = -0.005;
-		int nAtributos = pData.numAttributes();
+		double th = -0.1;
 		Instances newData = null;
 		while (!stop) {
 			rank.setThreshold(th);
@@ -77,10 +76,10 @@ public class FssInfoGain {
 			attSel.setSearch(rank);
 			attSel.setInputFormat(pData);
 			newData = Filter.useFilter(pData, attSel);
-			if (nAtributos != newData.numAttributes()) {
+			if (pData.numAttributes() != newData.numAttributes()) {
 				stop = true;
 			}
-			th = th + 0.0005;
+			th += 0.005;
 			System.out.println(th);
 		}
 		return newData;
