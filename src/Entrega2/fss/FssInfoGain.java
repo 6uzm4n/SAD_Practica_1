@@ -1,4 +1,4 @@
-package Entrega2;
+package Entrega2.fss;
 
 import java.io.File;
 
