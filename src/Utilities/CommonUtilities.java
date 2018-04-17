@@ -88,4 +88,25 @@ public class CommonUtilities {
 		}
 		return instances;
 	}
+	
+	/**
+	 * Carga las instancias de las que obtendremos el índice de la clase minoritaria
+	 * 
+	 * @param pInstances
+	 * Instancias de las que se obtendrá el íncide de la clase minoritaria
+	 * @return
+	 * Índice de la clase minoritaria
+	 */
+	public static int getMinorityClassIndex(Instances pInstances){
+        int[] nomCounts = pInstances.attributeStats(pInstances.classIndex()).nominalCounts;
+        int minClassAmount = -1;
+        int minClassIndex = -1;
+        for(int i = 0; i < nomCounts.length; i++) {
+            if (minClassAmount < 0 || nomCounts[i] < minClassAmount) {
+                minClassAmount = nomCounts[i];
+                minClassIndex = i;
+            }
+        }
+        return minClassIndex;
+    }
 }
