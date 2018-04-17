@@ -10,6 +10,8 @@ import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
 import weka.filters.unsupervised.attribute.FixedDictionaryStringToWordVector;
+import weka.filters.unsupervised.attribute.NumericToNominal;
+import weka.filters.unsupervised.attribute.StringToNominal;
 import weka.filters.unsupervised.attribute.StringToWordVector;
 
 public class MakeCompatibleFss {
@@ -72,12 +74,23 @@ public class MakeCompatibleFss {
 		Instances dev = Utilities.CommonUtilities.loadInstances(pathInBoW, 0);
 		
 		AttributeSelection attSel = new AttributeSelection();
-		
+
 		Instances newDev = null;
 		Instances newTrain = null;
 		
-		attSel.setInputFormat(train);
-		newTrain = Filter.useFilter(train, attSel);
+		NumericToNominal hai = new NumericToNominal();
+		Instances trainn = null;
+		hai.setInputFormat(train);
+		try {
+		    trainn = Filter.useFilter(train, hai);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
+		attSel.setInputFormat(trainn);
+		attSel.setEvaluator(new InfoGainAttributeEval());
+		attSel.setSearch(new Ranker());
+		newTrain = Filter.useFilter(trainn, attSel);
 		newDev = Filter.useFilter(dev, attSel);
 		newDev.setClassIndex(newDev.numAttributes() - 1);
 		

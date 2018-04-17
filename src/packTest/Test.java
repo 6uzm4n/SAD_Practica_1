@@ -18,8 +18,8 @@ public class Test {
 		
 		//TransformRaw
 		String[] array1 = new String[5];
-		array1[0]="C:/Users/olizy/Desktop/train.arff";
-		array1[1]="C:/Users/olizy/Desktop/trainBoW.arff";
+		array1[0]="C:/Users/olizy/Desktop/reuters_test.arff";
+		array1[1]="C:/Users/olizy/Desktop/reuters_testBoW.arff";
 		array1[2]="BOW";
 		array1[3]="Sparse";
 		array1[4]="diccionario";
@@ -32,8 +32,8 @@ public class Test {
 		
 		//FssInfoGain
 		String[] array3 = new String[2];
-		array3[0]="C:/Users/olizy/Desktop/trainBoW.arff";
-		array3[1]="C:/Users/olizy/Desktop/trainBoW_FSS2.arff";
+		array3[0]="C:/Users/olizy/Desktop/reuters_trainBoW.arff";
+		array3[1]="C:/Users/olizy/Desktop/reuters_trainBoW_FSS.arff";
 		
 		//MakeCompatibleFss
 		String[] array4 = new String[3];
