@@ -13,8 +13,8 @@ public class Test {
 		//TransformRaw
 		String[] array1 = new String[5];
 		array1[0]="C:/Users/olizy/Desktop/dev.arff";
-		array1[1]="C:/Users/olizy/Desktop/devBoW.arff";
-		array1[2]="BOW";
+		array1[1]="C:/Users/olizy/Desktop/devBoW_idf.arff";
+		array1[2]="TFIDF";
 		array1[3]="Sparse";
 		array1[4]="diccionario";
 		
@@ -25,9 +25,9 @@ public class Test {
 		array2[2]="C:/Users/olizy/Desktop/devBoW2.arff";
 		
 		try {
-			//GetRaw.main(array);
+		//	GetRaw.main(array);
 			TransformRaw.main(array1);
-			MakeCompatible.main(array2);
+		//	MakeCompatible.main(array2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
