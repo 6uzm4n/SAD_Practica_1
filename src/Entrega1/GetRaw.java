@@ -146,7 +146,7 @@ public class GetRaw {
     private static void getRawPlain (String pathIn, String pathOut) throws IOException{
         BufferedReader reader = new BufferedReader(new FileReader(new File(pathIn)));
         PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(new File(pathOut))));
-        writer.println("@relation SMS\n\n@attribute Text SMS\n@attribute @@class@@ {ham, spam}\n\n@data");
+        writer.println("@relation SMS\n\n@attribute sms string\n@attribute @@class@@ {ham, spam}\n\n@data");
         String lineIterator;
         while ((lineIterator = reader.readLine()) != null){
             String[] line = lineIterator.split("\t");

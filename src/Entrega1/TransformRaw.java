@@ -59,7 +59,7 @@ public class TransformRaw {
 			}
 
 			Instances data = CommonUtilities.loadArff(pathIn);
-			data.setClassIndex(data.numAttributes() - 1);//TODO: ¿Debemos dejar como clase el primer o ultimo atributo?
+			data.setClassIndex(data.numAttributes() - 1);
 			StringToWordVector filter;
 			Instances dataFiltered = null;
 			String relationName = data.relationName();
@@ -68,7 +68,7 @@ public class TransformRaw {
 			 * Transformamos el arff raw a BOW.
 			 */
 			if (format.equals("BOW")) {
-				filter = new StringToWordVector(10000);
+				filter = new StringToWordVector(99999);
 				filter.setDictionaryFileToSaveTo(new File(pathDictionary));
 				filter.setInputFormat(data);
 				dataFiltered = Filter.useFilter(data, filter);
@@ -78,11 +78,11 @@ public class TransformRaw {
 			 * Transformamos el arff raw a TF-IDF
 			 */
 			else if (format.equals("TF-IDF")) {
-				filter = new StringToWordVector(10000);
+				filter = new StringToWordVector(99999);
 				filter.setDictionaryFileToSaveTo(new File(pathDictionary));
 				filter.setOutputWordCounts(true);
-				filter.setIDFTransform(true);
 				filter.setTFTransform(true);
+				filter.setIDFTransform(true);
 				filter.setInputFormat(data);
 				dataFiltered = Filter.useFilter(data, filter);
 			}
@@ -95,6 +95,15 @@ public class TransformRaw {
 				sparseFilter.setInputFormat(dataFiltered);
 				dataFiltered = Filter.useFilter(dataFiltered, sparseFilter);
 			}
+
+			/*
+			 * Hacemos que la clase sea el último atributo
+			 */
+			Reorder reorderFilter = new Reorder();
+			reorderFilter.setInputFormat(dataFiltered);
+			reorderFilter.setOptions(new String[]{"-R","2-last,1"});
+			dataFiltered = Filter.useFilter(dataFiltered, reorderFilter);
+			dataFiltered.setClassIndex(dataFiltered.numAttributes()-1);
 
 			/*
 			 * Damos a la relación su nombre original

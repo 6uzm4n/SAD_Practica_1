@@ -4,6 +4,7 @@ import weka.classifiers.Classifier;
 import weka.core.SerializationHelper;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
+import weka.core.converters.ConverterUtils;
 import weka.core.converters.ConverterUtils.DataSource;
 
 import java.io.File;
@@ -35,9 +36,10 @@ public class CommonUtilities {
 		Instances data = null;
 
 		try {
-			data = new Instances(file);
+			ConverterUtils.DataSource ds = new ConverterUtils.DataSource(path);
+			data = ds.getDataSet();
 		} catch (IOException e) {
-			System.out.println("ERROR: Comprueba el path del fichero: " + path);
+			System.out.println("ERROR CARGANDO LAS INSTANCIAS: Comprueba el path del fichero: " + path);
 			System.exit(1);
 		}
 
