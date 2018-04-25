@@ -9,6 +9,7 @@ import weka.core.converters.TextDirectoryLoader;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.NominalToString;
 import weka.filters.unsupervised.attribute.Remove;
+import weka.filters.unsupervised.attribute.Reorder;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -73,9 +74,12 @@ public class GetRaw {
         TextDirectoryLoader loader = new TextDirectoryLoader();
         loader.setDirectory(new File(pathIn));
         Instances instances = loader.getDataSet();
-        instances.setRelationName("class");
 
-        //Creaci?n del archivo arff.
+        //Renombramos la relación y definimos el índice de la clase
+        instances.setRelationName("MOVIES");
+        instances.setClassIndex(instances.numAttributes()-1);
+
+        //Creación del archivo arff.
         CommonUtilities.saveArff(instances, pathOut);
     }
 
@@ -84,9 +88,8 @@ public class GetRaw {
      *
      * @param pathIn        Ruta en la que está ubicado el directorio de archivos raw.
      * @param pathOut       Ruta en la que se crea el nuevo archivo arff,
-     * @throws IOException  Si no se puede leer o escribir un archivo.
      */
-    private static void getRawCSV (String pathIn, String pathOut) throws IOException{
+    private static void getRawCSV (String pathIn, String pathOut){
         //Este método está personalizado para el archivo de pruebas "Tweets", por lo que no es útil con otros archivos.
         try{
             int classIndex = 1;
@@ -101,10 +104,10 @@ public class GetRaw {
 
             //Damos forma a las instancias
             instances.setRelationName("Tweets");
-            instances.renameAttribute(classIndex, "class");//Atributo de la clase.
+            instances.renameAttribute(classIndex, "@@class@@");//Atributo de la clase.
             instances.renameAttribute(tweetIndex, "tweet");//Atributo en el que se encuentra texto del tweet.
 
-            //Eliminamos atributos que no aportan informaci?n.
+            //Eliminamos atributos que no aportan información.
             Remove remove = new Remove();
             remove.setAttributeIndicesArray(new int[]{0, 2, 3});
             remove.setInputFormat(instances);
@@ -115,6 +118,16 @@ public class GetRaw {
             stringFilter.setAttributeIndexes("last");
             stringFilter.setInputFormat(instances);
             instances = Filter.useFilter(instances, stringFilter);
+
+            //Hacemos que la clase sea el último atributo
+            Reorder reorderFilter = new Reorder();
+            reorderFilter.setInputFormat(instances);
+            reorderFilter.setOptions(new String[]{"-R","2-last,1"});
+            instances = Filter.useFilter(instances, reorderFilter);
+
+            //Renombramos la relación y definimos el índice de la clase
+            instances.setRelationName("TWEETS");
+            instances.setClassIndex(instances.numAttributes()-1);
 
             CommonUtilities.saveArff(instances, pathOut);
         }catch (Exception e){
@@ -133,7 +146,7 @@ public class GetRaw {
     private static void getRawPlain (String pathIn, String pathOut) throws IOException{
         BufferedReader reader = new BufferedReader(new FileReader(new File(pathIn)));
         PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(new File(pathOut))));
-        writer.println("@relation SMS_Classifier\n\n@attribute Text SMS\n@attribute class {ham, spam}\n\n@data");
+        writer.println("@relation SMS\n\n@attribute Text SMS\n@attribute @@class@@ {ham, spam}\n\n@data");
         String lineIterator;
         while ((lineIterator = reader.readLine()) != null){
             String[] line = lineIterator.split("\t");
@@ -145,7 +158,7 @@ public class GetRaw {
             }else{
                 String instanceText = line[0];
                 instanceText = weka.core.Utils.quote(instanceText);
-                writer.println(instanceText + "," + "?");//TODO: Igual no es la interrogación, hay que revisar.
+                writer.println(instanceText + "," + "?");
             }
         }
         writer.close();
