@@ -39,7 +39,7 @@ public class FssInfoGain {
 			System.out.println((String.format("El argumento %s introduci es incorrecto.")));
 			System.exit(1);
 		}
-		Instances datos = Utilities.CommonUtilities.loadInstances(trainBow, 0);
+		Instances datos = Utilities.CommonUtilities.loadArff(trainBow, -1);
 		System.out.println("index: " + datos.classIndex());
 		try {
 			Instances newData = useFilter(datos);

@@ -16,15 +16,15 @@ public class ParamOptimization {
         if (args.length == 0) {
         	System.out.println("=====ParamOptimization=====");
 			System.out.println(
-					"Este programa tiene como función obtener los parámetros óptimos para el modelo Support Vector Machine.");
+					"Este programa tiene como funciï¿½n obtener los parï¿½metros ï¿½ptimos para el modelo Support Vector Machine.");
 			System.out.println("Este programa necesita introducir 1 argumento para funcionar correctamente.");
 			System.out.println(
-					"PRECONDICIONES:\nEl primer y único argumento será el path del conjunto de entrenamiento que usaremos posteriormente");
+					"PRECONDICIONES:\nEl primer y ï¿½nico argumento serÃ¡ el path del conjunto de entrenamiento que usaremos posteriormente");
 			System.out.println(
-					"POSTCONDICIONES:\nEl resultado de esta aplicación serán los parámetros óptimos para el modelo Support Vector Machine.");
+					"POSTCONDICIONES:\nEl resultado de esta aplicaciÃ³n serÃ¡n los parÃ¡metros Ã³ptimos para el modelo Support Vector Machine.");
 			System.out.println("Lista de argumentos:\n" + "-- Path del conjunto de entrenamiento a transformar.");
 			System.out.println(
-					"Ejemplo de una correcta ejecución: java -jar ParamOptimization.jar /path/to/train.arff");
+					"Ejemplo de una correcta ejecuciÃ³n: java -jar ParamOptimization.jar /path/to/train.arff");
 			System.exit(0);
         }else{
         	
@@ -35,22 +35,22 @@ public class ParamOptimization {
         	else{
         		Instances data = null;
         		try {
-					data = CommonUtilities.loadArff(args[0]);
+					data = CommonUtilities.loadArff(args[0], -1);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
         		
-        		System.out.println("El valor óptimo para el modelo SVM es: "+optimizeSupportVectorMachine(data));
+        		System.out.println("El valor Ã³ptimo para el modelo SVM es: "+optimizeSupportVectorMachine(data));
         	}
 	    }
 
     }
 	
 	/**
-	 * Calcula los parámetros óptimos para el modelo SVM y los imprime por pantalla
+	 * Calcula los parï¿½metros ï¿½ptimos para el modelo SVM y los imprime por pantalla
 	 * 
 	 * @param pInstances
-	 * 			Instancias de entrenamiento que usaremos para hallar los parámetros óptimos
+	 * 			Instancias de entrenamiento que usaremos para hallar los parï¿½metros ï¿½ptimos
 	 */
 	
 	

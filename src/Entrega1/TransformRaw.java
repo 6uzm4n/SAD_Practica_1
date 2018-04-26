@@ -58,7 +58,7 @@ public class TransformRaw {
 				System.exit(1);
 			}
 
-			Instances data = CommonUtilities.loadArff(pathIn);
+			Instances data = CommonUtilities.loadArff(pathIn, -1);
 			data.setClassIndex(data.numAttributes() - 1);
 			StringToWordVector filter;
 			Instances dataFiltered = null;

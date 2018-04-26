@@ -70,8 +70,8 @@ public class MakeCompatibleFss {
 	 * @throws IOException
 	 */
 	private static void makeCompatible(String pathInFss, String pathInBoW, String pathOut) throws Exception {
-		Instances train = Utilities.CommonUtilities.loadInstances(pathInFss, 0);
-		Instances dev = Utilities.CommonUtilities.loadInstances(pathInBoW, 0);
+		Instances train = Utilities.CommonUtilities.loadArff(pathInFss, -1);
+		Instances dev = Utilities.CommonUtilities.loadArff(pathInBoW, -1);
 		
 		AttributeSelection attSel = new AttributeSelection();
 

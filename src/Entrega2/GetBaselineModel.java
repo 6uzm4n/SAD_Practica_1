@@ -39,7 +39,7 @@ public class GetBaselineModel {
             System.exit(1);
         }
 
-        Instances train = CommonUtilities.loadInstances(trainPath, -1);
+        Instances train = CommonUtilities.loadArff(trainPath, -1);
         Classifier optimalClassifier = getBaselineModel(train);
         CommonUtilities.saveModel(optimalClassifier, modelPath + "baseline.model");
 
