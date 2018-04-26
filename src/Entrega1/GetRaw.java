@@ -172,7 +172,7 @@ public class GetRaw {
      * @return          Ruta en la que está ubicado el nuevo fichero CSV limpio.
      */
     private static String parseCSV (String path){
-        String newPath = "/tmp/" + path.split("/")[path.split("/").length - 1];
+        String newPath = path + ".tmp";
         try {
             BufferedReader reader = new BufferedReader(new FileReader(new File(path)));
             BufferedWriter writer = new BufferedWriter(new FileWriter(newPath));
