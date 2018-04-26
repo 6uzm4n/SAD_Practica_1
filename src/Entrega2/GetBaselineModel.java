@@ -41,7 +41,7 @@ public class GetBaselineModel {
 
         Instances train = CommonUtilities.loadArff(trainPath, -1);
         Classifier optimalClassifier = getBaselineModel(train);
-        CommonUtilities.saveModel(optimalClassifier, modelPath + "baseline.model");
+        CommonUtilities.saveModel(optimalClassifier, modelPath + train.relationName() + "_baseline.model");
 
         writeResults(optimalClassifier, train, modelPath);
 
@@ -66,9 +66,11 @@ public class GetBaselineModel {
 
         NaiveBayes naiveBayes = new NaiveBayes();
 
-        for (int i = 1; i < 3; i++) {
-            for (int j = 1; j < 3; j++) {
+        System.out.println("Iniciando optimización. Esto puede llevar un tiempo.");
+        for (int i = 1; i <= 2; i++) {
+            for (int j = 1; j <= 2; j++) {
                 try {
+                    System.out.println("Optimización " + ((2*i+j)-2) + " de 4...");
                     naiveBayes.setUseSupervisedDiscretization(useSupervisedDiscretization);
                     naiveBayes.setUseKernelEstimator(useKernelEstimator);
 
@@ -110,14 +112,17 @@ public class GetBaselineModel {
      */
     private static void writeResults(Classifier classifier, Instances instances, String pathOut) {
         try {
+            System.out.println("Escritura de los resultados...");
             Evaluation eval = evalKFoldCrossValidation(classifier, instances, 8);
-            PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(new File(pathOut + "baseline_quality.model"))));
+            PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(new File(pathOut + instances.relationName() + "_baseline_quality.txt"))));
             writer.println("==========================================================================================================");
             writer.println("CALIDAD ESTIMADA DE BASELINE:");
             writer.println("Se ha usado 8-fold cross-validation sobre el modelo baseline NaiveBayes para obtener la calidad estimada.");
             writer.println("==========================================================================================================");
             writer.println(eval.toSummaryString());
             writer.println(eval.toMatrixString());
+            writer.flush();
+            writer.close();
 
         } catch (Exception e) {
             e.printStackTrace();
