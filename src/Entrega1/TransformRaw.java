@@ -70,6 +70,8 @@ public class TransformRaw {
 			if (format.equals("BOW")) {
 				filter = new StringToWordVector(99999);
 				filter.setDictionaryFileToSaveTo(new File(pathDictionary));
+				filter.setOutputWordCounts(true);
+				filter.setLowerCaseTokens(true);
 				filter.setInputFormat(data);
 				dataFiltered = Filter.useFilter(data, filter);
 
@@ -80,9 +82,10 @@ public class TransformRaw {
 			else if (format.equals("TF-IDF")) {
 				filter = new StringToWordVector(99999);
 				filter.setDictionaryFileToSaveTo(new File(pathDictionary));
-				filter.setOutputWordCounts(true);
 				filter.setTFTransform(true);
 				filter.setIDFTransform(true);
+				filter.setOutputWordCounts(true);
+				filter.setLowerCaseTokens(true);
 				filter.setInputFormat(data);
 				dataFiltered = Filter.useFilter(data, filter);
 			}
