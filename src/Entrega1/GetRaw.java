@@ -55,7 +55,7 @@ public class GetRaw {
             System.out.println("Ejemplo de una correcta ejecución: java -jar getRaw.jar -d /path/to/file /path/to/newAfrff.arff");
             System.exit(0);
         }else{
-            System.out.println("Error en el input. Revise su sintaxis.");
+            CommonUtilities.printlnError("Error en el input. Revise su sintaxis.");
             System.exit(1);
 	    }
 

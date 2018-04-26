@@ -54,7 +54,7 @@ public class TransformRaw {
 				sparse = Boolean.parseBoolean(args[3]);
 				pathDictionary = args[4];
 			}else{
-				System.out.println("Error en el input. Revise su sintaxis.");
+				CommonUtilities.printlnError("Error en el input. Revise su sintaxis.");
 				System.exit(1);
 			}
 

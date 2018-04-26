@@ -38,7 +38,7 @@ public class MakeCompatible {
 					"Ejemplo de una correcta ejecución: java -jar Entrega1.MakeCompatible.jar /path/to/diccionario.txt /path/to/test.arff /path/to/newArff.arff");
 			System.exit(0);
 		} else if (args.length != 3) {
-			System.out.println("Error en el input. Revise su sintaxis.");
+			CommonUtilities.printlnError("Error en el input. Revise su sintaxis.");
 			System.exit(1);
 		} else {
 			String pathDicc = args[0];
@@ -49,7 +49,8 @@ public class MakeCompatible {
 			try {
 				data = CommonUtilities.loadArff(pathIn, -1);
 			} catch (NullPointerException e) {
-				System.out.println("Problema al cargar los datos");
+				CommonUtilities.printlnError("Problema al cargar los datos");
+				e.printStackTrace();
 				System.exit(1);
 			}
 
