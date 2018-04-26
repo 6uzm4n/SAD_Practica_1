@@ -31,7 +31,7 @@ public class GetBaselineModel {
                 trainPath = args[0];
                 modelPath = args[1];
             }else{
-                System.out.println("Error en los argumentos.");
+                CommonUtilities.printlnError("Error en los argumentos.");
                 System.exit(1);
             }
         } catch (Exception e) {
@@ -74,7 +74,7 @@ public class GetBaselineModel {
                     naiveBayes.setUseSupervisedDiscretization(useSupervisedDiscretization);
                     naiveBayes.setUseKernelEstimator(useKernelEstimator);
 
-                    Evaluation ev = evalKFoldCrossValidation(naiveBayes, inputTrain, 8);
+                    Evaluation ev = CommonUtilities.evalKFoldCrossValidation(naiveBayes, inputTrain, 8,1);
                     if (fMeasureMax < ev.fMeasure(minClassIndex)) {
                         optimalKernelEstimator = useKernelEstimator;
                         optimalSupervisedDiscretization = useSupervisedDiscretization;
@@ -113,7 +113,7 @@ public class GetBaselineModel {
     private static void writeResults(Classifier classifier, Instances instances, String pathOut) {
         try {
             System.out.println("Escritura de los resultados...");
-            Evaluation eval = evalKFoldCrossValidation(classifier, instances, 8);
+            Evaluation eval = CommonUtilities.evalKFoldCrossValidation(classifier, instances, 8, 1);
             PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(new File(pathOut + instances.relationName() + "_baseline_quality.txt"))));
             writer.println("==========================================================================================================");
             writer.println("CALIDAD ESTIMADA DE BASELINE:");
@@ -127,19 +127,5 @@ public class GetBaselineModel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Este método realiza una evaluación k-fold cross-validation según los parámetros de entrada.
-     * @param pClassifier   Modelo clasificador a usar.
-     * @param pData         Conjunto de datos de test.
-     * @param pK            Número de pliegues a realizar.
-     * @return              Evaluación completada.
-     * @throws Exception    Posibles errores en ejecución.
-     */
-    private static Evaluation evalKFoldCrossValidation(Classifier pClassifier, Instances pData, int pK) throws Exception {
-        Evaluation evaluator = new Evaluation(pData);
-        evaluator.crossValidateModel(pClassifier, pData, pK, new Random(1));
-        return evaluator;
     }
 }
