@@ -103,6 +103,7 @@ public class GetBaselineModel {
         return naiveBayes;
     }
 
+    //TODO: GUARDAR EL MODELO OPTIMO Y PASARLO COMO ATRIBUTO
     /**
      * Este método escribe en un archivo la calidad estimada de un modelo dado, siendo calculada por 8-fold cross-validation.
      *

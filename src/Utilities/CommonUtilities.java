@@ -7,8 +7,7 @@ import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.ConverterUtils;
 
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.Random;
 
 public class CommonUtilities {
@@ -106,9 +105,32 @@ public class CommonUtilities {
 	}
 
 	/**
+	 * Este método escribe en un archivo la calidad estimada de una evaluación dada.
+	 *
+	 * @param evaluation    Evaluación cuya calidad se quiere escribir.
+	 * @param pathOut       Ruta al fichero que se desea crear/sobreescribir.
+	 */
+	public static void writeQuality(Evaluation evaluation, String pathOut) {
+		try {
+			PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(new File(pathOut + "_quality.txt"))));
+			writer.println("==========================================================================================================");
+			writer.println("CALIDAD ESTIMADA DE BASELINE:");
+			writer.println("Se ha usado 8-fold cross-validation sobre el modelo baseline NaiveBayes para obtener la calidad estimada.");
+			writer.println("==========================================================================================================");
+			writer.println(evaluation.toSummaryString());
+			writer.println(evaluation.toMatrixString());
+			writer.flush();
+			writer.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Carga las instancias de las que obtendremos el �ndice de la clase minoritaria
 	 * 
-	 * @param pInstances
+	 * @param instances
 	 * Instancias de las que se obtendr� el �ncide de la clase minoritaria
 	 * @return
 	 * �ndice de la clase minoritaria
