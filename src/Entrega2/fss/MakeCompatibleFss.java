@@ -1,18 +1,16 @@
 package Entrega2.fss;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import Utilities.CommonUtilities;
-import weka.attributeSelection.InfoGainAttributeEval;
-import weka.attributeSelection.Ranker;
 import weka.core.Instances;
 import weka.filters.Filter;
-import weka.filters.supervised.attribute.AttributeSelection;
 import weka.filters.unsupervised.attribute.FixedDictionaryStringToWordVector;
-import weka.filters.unsupervised.attribute.NumericToNominal;
-import weka.filters.unsupervised.attribute.StringToNominal;
-import weka.filters.unsupervised.attribute.StringToWordVector;
+import weka.filters.unsupervised.attribute.Reorder;
 
 public class MakeCompatibleFss {
 	/**
@@ -22,20 +20,21 @@ public class MakeCompatibleFss {
 	 *
 	 * @param args
 	 *            Parámetros de entrada -args[0] - ruta del fichero .arff que se
-	 *            debe tomar como referencia -args[1] - ruta del fichero .arff que
-	 *            se quiere hacer compatible -args[2] - ruta del fichero .arff
+	 *            debe tomar como referencia -args[1] - ruta del fichero .arff Raw
+	 *            que se quiere hacer compatible -args[2] - ruta del fichero .arff
 	 *            compatible que se desea generar
 	 * @throws IOException
 	 *             Si no se pueden obtener correctamente las instancias a partir de
 	 *             los ficheros de entrada
 	 */
 	public static void main(String[] args) throws IOException {
+		//gestionar parámetros
 		String pathFss = null;
-		String pathBoW = null;
+		String pathRaw = null;
 		String pathNewFss = null;
 		try {
 			pathFss = args[0];
-			pathBoW = args[1];
+			pathRaw = args[1];
 			pathNewFss = args[2];
 		} catch (IndexOutOfBoundsException e) {
 			String q = "Este programa hace que el espacio de atributos del conjunto de evaluacion sea compatible con el de entrenamiento\n"
@@ -43,12 +42,12 @@ public class MakeCompatibleFss {
 					+ "Este programa espera 3 argumentos:\n" + "\t1 - Ruta del fichero .arff de referencia\n"
 					+ "\t2 - Ruta del fichero .arff para compatibilizar\n"
 					+ "\t3 - Ruta del fichero .arff compatible de salida\n"
-					+ "\nEjemplo: java -jar MakeCompatibleFss.jar /path/to/input/trainFss /path/to/input/dev path/to/output/devCompatible";
+					+ "\nEjemplo: java -jar MakeCompatibleFss.jar /path/to/input/trainFss /path/to/input/dev /path/to/input/devFSSCompatible";
 			System.out.println(q);
 			System.exit(1);
 		}
 		try {
-			makeCompatible(pathFss, pathBoW, pathNewFss);
+			makeCompatible(pathFss, pathRaw, pathNewFss);
 		} catch (Exception e) {
 
 			System.out.println("Argumentos incorrectos");
@@ -62,39 +61,49 @@ public class MakeCompatibleFss {
 	 * ruta especificada
 	 *
 	 * @param pathInFss
-	 *            ruta del fichero .arff referencia
-	 * @param pathInBoW
+	 *            ruta del fichero .arff de referencia
+	 * @param pathInRaw
 	 *            ruta del fichero .arff a compatibilizar
 	 * @param pathOut
 	 *            ruta del fichero .arff generado de salida
+	 * @param pathDicc
+	 *            path diccionario
 	 * @throws IOException
 	 */
-	private static void makeCompatible(String pathInFss, String pathInBoW, String pathOut) throws Exception {
-		Instances train = Utilities.CommonUtilities.loadArff(pathInFss, -1);
-		Instances dev = Utilities.CommonUtilities.loadArff(pathInBoW, -1);
+	private static void makeCompatible(String pathInFss, String pathInRaw, String pathOut) throws Exception {
+		//Cargar instancias
+		Instances fss = Utilities.CommonUtilities.loadArff(pathInFss, -1);
+		Instances bow = Utilities.CommonUtilities.loadArff(pathInRaw, -1);
 		
-		AttributeSelection attSel = new AttributeSelection();
-
-		Instances newDev = null;
-		Instances newTrain = null;
-		
-		NumericToNominal hai = new NumericToNominal();
-		Instances trainn = null;
-		hai.setInputFormat(train);
-		try {
-		    trainn = Filter.useFilter(train, hai);
-		} catch (Exception e) {
-		    e.printStackTrace();
+		//Generar diccionariol temporal
+		String pathDiccTmp = "diccionarioTmp";
+		FileWriter diccFSS = new FileWriter(new File(pathDiccTmp));
+		for (int i = 0; i < fss.numAttributes() - 1; i++) {
+			diccFSS.write("\n" + fss.attribute(i).name());
 		}
+		diccFSS.flush();
+		diccFSS.close();
 		
-		attSel.setInputFormat(trainn);
-		attSel.setEvaluator(new InfoGainAttributeEval());
-		attSel.setSearch(new Ranker());
-		newTrain = Filter.useFilter(trainn, attSel);
-		newDev = Filter.useFilter(dev, attSel);
-		newDev.setClassIndex(newDev.numAttributes() - 1);
+		//Transformar el espacio de atributos segun el diccionario generado
+		FixedDictionaryStringToWordVector fixedFilter = new FixedDictionaryStringToWordVector();
+		fixedFilter.setDictionaryFile(new File(pathDiccTmp));
+		fixedFilter.setInputFormat(bow);
+		Instances newData = Filter.useFilter(bow, fixedFilter);
 		
-		CommonUtilities.saveArff(newDev, pathOut);
+		//Eliminar fichero temporal del diccionario
+		Files.delete(Paths.get(pathDiccTmp));
+		
+		//Ordenar atributos
+		Reorder reorderFilter = new Reorder();
+		reorderFilter.setInputFormat(newData);
+		reorderFilter.setOptions(new String[] { "-R", "2-last,1" });
+		newData = Filter.useFilter(newData, reorderFilter);
+		newData.setClassIndex(newData.numAttributes() - 1);
+
+		// Damos a la nueva relación su nombre original
+		newData.setRelationName(bow.relationName());
+
+		CommonUtilities.saveArff(newData, pathOut);
 
 	}
 
