@@ -12,11 +12,39 @@ public class GetModel {
 
 
     public static void main(String[] args) throws Exception {
+    	 String Instancias = null;
+         String atributoKernel=  null;
+         String pathModel = null;
+         String pathWrite = null;
+        try{
+            if (args.length == 0){
+                System.out.println("=====================================================================");
+                System.out.println("Este programa tiene como función generar un modelo Support Vector Machine óptimo dado un conjunto de instancias.");
+                System.out.println("PRECONDICIÓN: El path donde se desea guardar el modelo debe ser un directorio.");
+                System.out.println("POSCONDICIÓN: Se han creado tanto SVM.model como SVM_quality.txt");
+                System.out.println("ARGUMENTOS:\n--El conjunto de instancias con las que evaluar." +
+                                   "\n--El atributo optimo para generar el clasificador empleando el algoritmo SVM" +
+                                   "\n--La ruta donde guardar el modelo generado." +
+                                   "\n-- Path donde se desea guardar tanto el modelo como su calidad estimada.");
+                System.out.println("EJEMPLO DE USO: \"java -jar GetModel.jar /path/to/data.arff numero_optimo  /path/to/model/ /path/to/destination/\"");
+                System.out.println("=====================================================================");
 
-        String Instancias = args[0];
-        String atributoKernel=  args[1];
-        String pathModel = args[2];
-        String pathWrite = args[3];
+                        System.exit(0);
+            }else if (args.length == 4) {
+                Instancias = args[0];
+                atributoKernel=  args[1];
+                pathModel = args[2];
+                pathWrite = args[3];
+            }else{
+                CommonUtilities.printlnError("Error en los argumentos.");
+                System.exit(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        
         DataSource DataS;
         double AtrOpt=  Double.parseDouble(atributoKernel);
         Instances Inst = null;
