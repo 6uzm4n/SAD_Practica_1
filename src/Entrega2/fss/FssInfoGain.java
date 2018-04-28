@@ -65,6 +65,7 @@ public class FssInfoGain {
 		double th = -0.1;
 		Instances newData = null;
 		while (!stop) {
+			System.out.println(th);
 			rank.setThreshold(th);
 			attSel.setEvaluator(new InfoGainAttributeEval());
 			attSel.setSearch(rank);
@@ -74,7 +75,6 @@ public class FssInfoGain {
 				stop = true;
 			}
 			th += 0.005;
-			System.out.println(th);
 		}
 		// Damos a la relación su nombre original
 		newData.setRelationName(data.relationName());

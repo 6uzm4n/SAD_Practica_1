@@ -19,7 +19,7 @@ public class ParamOptimization {
 					"PRECONDICIONES:\nEl primer y único argumento será el path del conjunto de entrenamiento que usaremos posteriormente");
 			System.out.println(
 					"POSTCONDICIONES:\nEl resultado de esta aplicación serán los parámetros óptimos para el modelo Support Vector Machine.");
-			System.out.println("Lista de argumentos:\n" + "-- Path del conjunto de entrenamiento a transformar.");
+			System.out.println("Lista de argumentos:\n" + "-- Path del conjunto de datos del que sacar los parámetros óptimos.");
 			System.out.println(
 					"Ejemplo de una correcta ejecución: java -jar ParamOptimization.jar /path/to/train.arff");
 			System.exit(0);

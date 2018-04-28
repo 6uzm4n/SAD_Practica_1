@@ -66,8 +66,6 @@ public class MakeCompatibleFss {
 	 *            ruta del fichero .arff a compatibilizar
 	 * @param pathOut
 	 *            ruta del fichero .arff generado de salida
-	 * @param pathDicc
-	 *            path diccionario
 	 * @throws IOException
 	 */
 	private static void makeCompatible(String pathInFss, String pathInRaw, String pathOut) throws Exception {

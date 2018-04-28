@@ -31,7 +31,7 @@ public class MakeCompatible {
 							+ "El segundo es el path del conjunto de evaluación que se debe hacer compatible. El tercero será el path de la salida para este nuevo conjunto de datos compatible");
 			System.out.println("POSTCONDICIONES:\nEl resultado de esta aplicación será la creación de un fichero .arff "
 					+ "que contiene un conjunto de datos de evauación compatible con el del entrenamiento\n");
-			System.out.println("Lista de argumentos:\n" + "-- Path del conjunto de entrenamiento con el que comparar."
+			System.out.println("Lista de argumentos:\n" + "-- Path del diccionario 	 con el que comparar."
 					+ "\n-- Path de la raíz del fichero .arff de evaluación a convertir. No debe estar en formato BOW."
 					+ "\n-- Path del destino donde se guardará el fichero .arff resultante tras la ejecución");
 			System.out.println(
