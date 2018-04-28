@@ -12,7 +12,10 @@ public class GetModel {
 
 
     public static void main(String[] args) throws Exception {
-        
+    	 String Instancias = null;
+         String atributoKernel=  null;
+         String pathModel = null;
+         String pathWrite = null;
         try{
             if (args.length == 0){
                 System.out.println("=====================================================================");
@@ -28,10 +31,10 @@ public class GetModel {
 
                         System.exit(0);
             }else if (args.length == 4) {
-                String Instancias = args[0];
-                String atributoKernel=  args[1];
-                String pathModel = args[2];
-                String pathWrite = args[3];
+                Instancias = args[0];
+                atributoKernel=  args[1];
+                pathModel = args[2];
+                pathWrite = args[3];
             }else{
                 CommonUtilities.printlnError("Error en los argumentos.");
                 System.exit(1);
