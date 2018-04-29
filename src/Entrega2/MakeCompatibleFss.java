@@ -23,13 +23,13 @@ public class MakeCompatibleFss {
 		String pathRaw = "";
 		String pathNewFss = "";
 		if (args.length == 0){
-			System.out.println("=====Predictions=====");
+			System.out.println("=====Make Cmpatible FSS=====");
 			System.out.println("Este programa hace que el espacio de atributos del conjunto de evaluacion sea compatible con el de entrenamiento.");
 			System.out.println("Este programa necesita que introduzcas 3 argumentos.");
-			System.out.println("PRECONDICIONES:\nEl archivo usado para la predicción será de formato .arff y tener un " +
+			System.out.println("PRECONDICIONES:\nEl fichero modelo a utilizar será de formato .arff y tener un " +
 					"atributo de tipo String");
-			System.out.println("POSTCONDICIONES:\nEl resultado de este programa serán las instancias, clase real y clase estimada "
-					+ "del conjunto de test con cada uno de los dos algoritmos considerados.\n");
+			System.out.println("POSTCONDICIONES:\nEl resultado de este programa será un fichero .arff compatible con el introducido como parámetro "
+					+ ".\n");
 			System.out.println("Lista de argumentos:\n-Ruta del fichero .arff de referencia\n" +
 					"-Ruta del fichero .arff para compatibilizar.\n" +
 					"-Ruta del fichero .arff compatible de salida");
