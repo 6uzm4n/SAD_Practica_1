@@ -91,14 +91,18 @@ public class GetBaselineModel {
             useKernelEstimator = true;
         }
 
-        System.out.println("=================================================");
-        System.out.println("CONFIGURACIÓN ÓPTIMA DE NAIVE BAYES:");
-        System.out.println ("¿Utilizar kernelEstimator?             " + optimalKernelEstimator);
-        System.out.println ("¿Utilizat supervisedDiscretization?    " + optimalSupervisedDiscretization);
-        System.out.println("=================================================");
-
-        naiveBayes.setUseKernelEstimator(optimalKernelEstimator);
-        naiveBayes.setUseSupervisedDiscretization(optimalSupervisedDiscretization);
+        try{
+            System.out.println("=================================================");
+            System.out.println("CONFIGURACIÓN ÓPTIMA DE NAIVE BAYES:");
+            System.out.println ("¿Utilizar kernelEstimator?             " + optimalKernelEstimator);
+            System.out.println ("¿Utilizat supervisedDiscretization?    " + optimalSupervisedDiscretization);
+            System.out.println("=================================================");
+            naiveBayes.setUseKernelEstimator(optimalKernelEstimator);
+            naiveBayes.setUseSupervisedDiscretization(optimalSupervisedDiscretization);
+            naiveBayes.buildClassifier(inputTrain);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         return naiveBayes;
     }
