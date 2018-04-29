@@ -92,6 +92,22 @@ public class CommonUtilities {
 	/**
 	 * Guarda el clasificador pClassifier en la ruta pPath.
 	 *
+	 * @param pathIn		ruta del clasificador a cargar
+	 */
+	public static Classifier loadModel(String pathIn){
+		Classifier model = null;
+		try {
+			model = (Classifier) SerializationHelper.read(pathIn);
+		} catch (Exception e) {
+			printlnError("Error al cargar el clasificador.");
+			e.printStackTrace();
+		}
+		return model;
+	}
+
+	/**
+	 * Guarda el clasificador pClassifier en la ruta pPath.
+	 *
 	 * @param classifier	clasificador a guardar
 	 * @param pathOut		ruta del archivo a crear
 	 */
@@ -114,8 +130,8 @@ public class CommonUtilities {
 		try {
 			PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(new File(pathOut + "_quality.txt"))));
 			writer.println("==========================================================================================================");
-			writer.println("CALIDAD ESTIMADA DE BASELINE:");
-			writer.println("Se ha usado 8-fold cross-validation sobre el modelo baseline NaiveBayes para obtener la calidad estimada.");
+			writer.println("CALIDAD ESTIMADA DEL MODELO:");
+			writer.println("Se ha usado 8-fold cross-validation sobre el modelo para obtener la calidad estimada.");
 			writer.println("==========================================================================================================");
 			writer.println(evaluation.toSummaryString());
 			writer.println(evaluation.toMatrixString());
