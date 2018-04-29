@@ -7,7 +7,6 @@ import java.io.File;
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.*;
-import weka.filters.unsupervised.instance.NonSparseToSparse;
 import weka.filters.unsupervised.instance.SparseToNonSparse;
 
 public class TransformRaw {

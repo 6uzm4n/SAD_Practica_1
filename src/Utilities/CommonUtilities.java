@@ -17,18 +17,14 @@ public class CommonUtilities {
 	 *
 	 * @param pText Texto a escribir
 	 */
-	public static void printError(String pText) {
-		System.out.print(String.format("\33[31m%s\33[0m", pText));
-	}
+	private static void printError(String pText) {System.out.print(String.format("\33[31m%s\33[0m", pText));}
 
 	/**
 	 * Escribe por consola el texto pTexto en color rojo. SIEMPRE incluye salto de línea.
 	 *
 	 * @param pText Texto a escribir
 	 */
-	public static void printlnError(String pText) {
-		printError(String.format("%s\n", pText));
-	}
+	public static void printlnError(String pText) {printError(String.format("%s\n", pText));}
 
 	/**
 	 * Cargamos las instancias del fichero path y asigna a estas el índice de clase classIndex. En caso de ser negativo
@@ -45,7 +41,7 @@ public class CommonUtilities {
 			file = new FileReader(path);
 			file.close();
 		} catch (Exception e) {
-			System.out.println("ERROR CARGANDO LAS INSTANCIAS: Comprueba el path del fichero: " + path);
+			printlnError("ERROR CARGANDO LAS INSTANCIAS: Comprueba el path del fichero: " + path);
 			System.exit(1);
 		}
 
@@ -55,7 +51,7 @@ public class CommonUtilities {
 			ConverterUtils.DataSource ds = new ConverterUtils.DataSource(path);
 			data = ds.getDataSet();
 		} catch (Exception e) {
-			System.out.println("ERROR LEYENDO LAS INSTANCIAS: Comprueba la estructura interna del fichero: " + path);
+			printlnError("ERROR LEYENDO LAS INSTANCIAS: Comprueba la estructura interna del fichero: " + path);
 			System.exit(1);
 		}
 
@@ -81,6 +77,7 @@ public class CommonUtilities {
 			arffSaver.setFile(new File(pathOut));
 			arffSaver.writeBatch();
 		} catch (Exception e) {
+			printlnError("ERROR AL GUARDAR LAS INSTANCIAS: Comprueba el path: " + pathOut);
 			e.printStackTrace();
 		}
 	}
@@ -96,7 +93,7 @@ public class CommonUtilities {
 		try {
 			model = (Classifier) SerializationHelper.read(pathIn);
 		} catch (Exception e) {
-			printlnError("Error al cargar el clasificador.");
+			printlnError("ERROR AL CARGAR EL CLASIFICADOR. Comprueba el path: " + pathIn);
 			e.printStackTrace();
 		}
 		return model;
@@ -112,7 +109,7 @@ public class CommonUtilities {
 		try {
 			SerializationHelper.write(pathOut, classifier);
 		} catch (Exception e) {
-			printlnError("Error al guardar el clasificador.");
+			printlnError("ERROR AL GUARDAR EL CLASIFICADOR. Comprueba el path: " + pathOut);
 			e.printStackTrace();
 		}
 	}
@@ -136,6 +133,7 @@ public class CommonUtilities {
 			writer.close();
 
 		} catch (Exception e) {
+			printlnError("ERROR AL ESCRIBIR LA CALIDAD DEL MODELO.");
 			e.printStackTrace();
 		}
 	}
@@ -177,7 +175,7 @@ public class CommonUtilities {
 			evaluation = new Evaluation(instances);
 			evaluation.crossValidateModel(classifier, instances, folds, new Random(seed));
 		} catch (Exception e) {
-			printlnError("Error al evaluar el clasificador");
+			printlnError("ERROR AL EVALUAR EL CLASIFICADOR.");
 			e.printStackTrace();
 			System.exit(1);
 		}

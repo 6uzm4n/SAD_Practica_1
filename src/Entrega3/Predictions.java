@@ -2,7 +2,6 @@ package Entrega3;
 	
 import Utilities.CommonUtilities;
 import weka.classifiers.Classifier;
-import weka.classifiers.bayes.NaiveBayes;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -68,6 +67,7 @@ public class Predictions {
 	 */
 	private static void predictClass(Instances data, Classifier classifier, String pathOut) {
 		StringBuilder output = new StringBuilder();
+		output.append("==============================================\n");
 		output.append("INSTANCIA	CLASE REAL	CLASE PREDICHA\n");
 		output.append("==============================================\n");
 		Instance cntInstance;

@@ -1,12 +1,9 @@
-package Entrega2.fss;
-
-import java.io.File;
+package Entrega2;
 
 import Utilities.CommonUtilities;
 import weka.attributeSelection.InfoGainAttributeEval;
 import weka.attributeSelection.Ranker;
 import weka.core.Instances;
-import weka.core.converters.ArffSaver;
 import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
 
@@ -53,7 +50,7 @@ public class FssInfoGain {
 	 * 
 	 * @param data	Conjunto de nstancias sobre las cuales aplicar la selección de atributos.
 	 */
-	public static Instances useFilter(Instances data) throws Exception {
+	private static Instances useFilter(Instances data) throws Exception {
 		AttributeSelection attSel = new AttributeSelection();
 		Ranker rank = new Ranker();
 		boolean stop = false;
