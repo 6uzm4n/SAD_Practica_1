@@ -85,6 +85,7 @@ public class MakeCompatibleFss {
 		//Transformar el espacio de atributos segun el diccionario generado
 		FixedDictionaryStringToWordVector fixedFilter = new FixedDictionaryStringToWordVector();
 		fixedFilter.setDictionaryFile(new File(pathDiccTmp));
+		fixedFilter.setOutputWordCounts(true);
 		fixedFilter.setInputFormat(bow);
 		Instances newData = Filter.useFilter(bow, fixedFilter);
 		
