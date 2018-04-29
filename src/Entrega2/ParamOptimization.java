@@ -8,6 +8,11 @@ import weka.classifiers.functions.supportVector.PolyKernel;
 
 public class ParamOptimization {
 
+	/**
+	 * Devuelve el exponente óptimo para el modelo clasificador SVM.
+	 *
+	 * @param args  Parámetros de entrada. En caso de no introducir ninguno se muestra una descripción de estos.
+	 */
 	public static void main(String[] args){
 
         if (args.length == 0) {
@@ -47,8 +52,7 @@ public class ParamOptimization {
 	/**
 	 * Calcula los parámetros óptimos para el modelo SVM y los imprime por pantalla.
 	 * 
-	 * @param pInstances
-	 * 			Instancias de entrenamiento que usaremos para hallar los parámetros óptimos
+	 * @param pInstances	Instancias de entrenamiento que usaremos para hallar los parámetros óptimos
 	 */
 	private static int optimizeSupportVectorMachine(Instances pInstances){
 		

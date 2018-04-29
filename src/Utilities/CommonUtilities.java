@@ -13,30 +13,29 @@ import java.util.Random;
 public class CommonUtilities {
 
 	/**
-	 * Escribe por consola el texto pTexto en color rojo.
-	 * NO incluye salto de línea.
+	 * Escribe por consola el texto pTexto en color rojo. NO incluye salto de línea.
 	 *
-	 * @param pText texto a escribir
+	 * @param pText Texto a escribir
 	 */
 	public static void printError(String pText) {
 		System.out.print(String.format("\33[31m%s\33[0m", pText));
 	}
 
 	/**
-	 * Escribe por consola el texto pTexto en color rojo.
-	 * SIEMPRE incluye salto de línea.
+	 * Escribe por consola el texto pTexto en color rojo. SIEMPRE incluye salto de línea.
 	 *
-	 * @param pText texto a escribir
+	 * @param pText Texto a escribir
 	 */
 	public static void printlnError(String pText) {
 		printError(String.format("%s\n", pText));
 	}
 
 	/**
-	 * Cargamos las instancias del fichero
+	 * Cargamos las instancias del fichero path y asigna a estas el índice de clase classIndex. En caso de ser negativo
+	 * se asigna el último atributo como atributo de clase.
 	 *
-	 * @param path
-	 *            de entrada de ficheros
+	 * @param path			Instancias a cargar.
+	 * @param classIndex	Indice de la clase.
 	 */
 	public static Instances loadArff(String path, int classIndex){
 
@@ -70,13 +69,10 @@ public class CommonUtilities {
 	}
 
 	/**
-	 * Guarda las instancias que se le pasan como parametro en la ruta especificada
-	 * en formato .arff
+	 * Guarda las instancias instances en la ruta pathOut.
 	 *
-	 * @param instances
-	 *            Conjunto de instancias a convertir y guardar en el fichero .arff
-	 * @param pathOut
-	 *            Ruta donde se guardar� el fichero resultante de la conversi�n
+	 * @param instances	Conjunto de instancias a convertir y guardar en el fichero .arff.
+	 * @param pathOut	Ruta donde se guardará el fichero resultante de la conversión.
 	 */
 	public static void saveArff(Instances instances, String pathOut) {
 		try {
@@ -90,9 +86,10 @@ public class CommonUtilities {
 	}
 
 	/**
-	 * Guarda el clasificador pClassifier en la ruta pPath.
+	 * Carga el clasificador ubicado en la ruta pPath.
 	 *
-	 * @param pathIn		ruta del clasificador a cargar
+	 * @param pathIn	Ruta del clasificador a cargar.
+	 * @return 			Clasificador cargado.
 	 */
 	public static Classifier loadModel(String pathIn){
 		Classifier model = null;
@@ -108,8 +105,8 @@ public class CommonUtilities {
 	/**
 	 * Guarda el clasificador pClassifier en la ruta pPath.
 	 *
-	 * @param classifier	clasificador a guardar
-	 * @param pathOut		ruta del archivo a crear
+	 * @param classifier	Clasificador a guardar.
+	 * @param pathOut		Ruta del archivo a crear.
 	 */
 	public static void saveModel(Classifier classifier, String pathOut){
 		try {
@@ -124,7 +121,7 @@ public class CommonUtilities {
 	 * Este método escribe en un archivo la calidad estimada de una evaluación dada.
 	 *
 	 * @param evaluation    Evaluación cuya calidad se quiere escribir.
-	 * @param pathOut       Ruta al fichero que se desea crear/sobreescribir.
+	 * @param pathOut       Ruta del fichero que se desea crear/sobreescribir.
 	 */
 	public static void writeQuality(Evaluation evaluation, String pathOut) {
 		try {
@@ -144,12 +141,10 @@ public class CommonUtilities {
 	}
 
 	/**
-	 * Carga las instancias de las que obtendremos el �ndice de la clase minoritaria
+	 * Obtiene el índice de la clase minoritaria del conjunto de instancias dado.
 	 * 
-	 * @param instances
-	 * Instancias de las que se obtendr� el �ncide de la clase minoritaria
-	 * @return
-	 * �ndice de la clase minoritaria
+	 * @param instances	Instancias de las que se obtendrá el íncide de la clase minoritaria.
+	 * @return			Índice de la clase minoritaria.
 	 */
 	public static int getMinorityClassIndex(Instances instances){
         int[] nomCounts = instances.attributeStats(instances.classIndex()).nominalCounts;
@@ -165,14 +160,14 @@ public class CommonUtilities {
     }
 
 	/**
-	 * Evaluación k-Fold Cross-Validation
-	 * Realiza una evaluación k-Fold Cross-Validation sobre el clasificador pClassifier con las instancias pIsntaces y la seed pSeed donde k es pFolds.
+	 * Realiza una evaluación k-Fold Cross-Validation sobre el clasificador pClassifier con las instancias pIsntaces y
+	 * la seed pSeed, donde k es el número de folds.
 	 *
-	 * @param classifier Clasificador a evaluar
-	 * @param instances  Instancias con las que evaluar
-	 * @param folds      Número de iteraciones a realizar
-	 * @param seed       Seed para la randomizanión
-	 * @return el objeto Evaluation que contiene los resultados de la evaluación.
+	 * @param classifier Clasificador a usar en la evaluación.
+	 * @param instances  Instancias que evaluar.
+	 * @param folds      Número de iteraciones a realizar.
+	 * @param seed       Seed para la randomización.
+	 * @return 			 Objeto evaluation que contiene los resultados de la evaluación.
 	 */
 
 	public static Evaluation evalKFoldCrossValidation(Classifier classifier, Instances instances, int folds,

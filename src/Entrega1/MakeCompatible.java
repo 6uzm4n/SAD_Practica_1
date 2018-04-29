@@ -13,7 +13,7 @@ public class MakeCompatible {
 	/**
 	 * Hace compatible un conjunto de evaluación representándolo en un espacio de atributos compatible con el de entrenamiento.
 	 *
-	 * @param args 			Parámetros de entrada.
+	 * @param args 	Parámetros de entrada. En caso de no introducir ninguno se muestra una descripción de estos.
 	 */
 	public static void main(String[] args) throws Exception {
 		if (args.length == 0) {

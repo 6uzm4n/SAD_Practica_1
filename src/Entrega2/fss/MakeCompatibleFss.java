@@ -14,20 +14,12 @@ import weka.filters.unsupervised.attribute.Reorder;
 
 public class MakeCompatibleFss {
 	/**
-	 * Hace compatible un conjunto de evaluacion representandolo en un espacio de
-	 * atributos compatible con el del conjunto de entrenamiento y o guarda en la
-	 * ruta especificada
+	 * Hace compatible un conjunto de evaluación representándolo en un espacio de atributos compatible con el del
+	 * conjunto de entrenamiento y lo guarda en la ruta especificada.
 	 *
-	 * @param args
-	 *            Parámetros de entrada -args[0] - ruta del fichero .arff que se
-	 *            debe tomar como referencia -args[1] - ruta del fichero .arff Raw
-	 *            que se quiere hacer compatible -args[2] - ruta del fichero .arff
-	 *            compatible que se desea generar
-	 * @throws IOException
-	 *             Si no se pueden obtener correctamente las instancias a partir de
-	 *             los ficheros de entrada
+	 * @param args	Parámetros de entrada. En caso de no introducir ninguno se muestra una descripción de estos.
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
 		//gestionar parámetros
 		String pathFss = null;
 		String pathRaw = null;
@@ -56,17 +48,12 @@ public class MakeCompatibleFss {
 	}
 
 	/**
-	 * Aplica el mismo filtro que se ha aplicado al conjunto de entrenamiento de
-	 * entrada al conjunto de evaluacion pasado como parametro y lo guarda en la
-	 * ruta especificada
+	 * Aplica el mismo filtro que se ha aplicado al conjunto de entrenamiento de entrada al conjunto de evaluacion
+	 * pasado como parametro y lo guarda en la ruta especificada
 	 *
-	 * @param pathInFss
-	 *            ruta del fichero .arff de referencia
-	 * @param pathInRaw
-	 *            ruta del fichero .arff a compatibilizar
-	 * @param pathOut
-	 *            ruta del fichero .arff generado de salida
-	 * @throws IOException
+	 * @param pathInFss	ruta del fichero .arff de referencia.
+	 * @param pathInRaw	ruta del fichero .arff a compatibilizar.
+	 * @param pathOut	ruta del fichero .arff generado de salida.
 	 */
 	private static void makeCompatible(String pathInFss, String pathInRaw, String pathOut) throws Exception {
 		//Cargar instancias

@@ -20,7 +20,7 @@ public class GetRaw {
 	/**
 	 * Crea un archivo arff a partir de un directorio de ficheros (raw).
 	 *
-	 * @param args          Parámetros de entrada.
+	 * @param args  Parámetros de entrada. En caso de no introducir ninguno se muestra una descripción de estos.
 	 */
 	public static void main(String[] args) throws IOException {
 
@@ -64,7 +64,6 @@ public class GetRaw {
      *
      * @param pathIn        Ruta en la que está ubicado el directorio de archivos de texto plano.
      * @param pathOut       Ruta en la que se crea el nuevo archivo arff,
-     * @throws IOException  Si no se puede leer o escribir un archivo.
      */
     private static void getRawDirectory (String pathIn, String pathOut) throws IOException {
         //Carga y lectura del directorio de archivos de texto plano.
@@ -137,7 +136,6 @@ public class GetRaw {
      *
      * @param pathIn        Ruta en la que está ubicado el archivo de texto plano.
      * @param pathOut       Ruta en la que se crea el nuevo archivo arff,
-     * @throws IOException  Si no se puede leer o escribir un archivo.
      */
     private static void getRawPlain (String pathIn, String pathOut) throws IOException{
         BufferedReader reader = new BufferedReader(new FileReader(new File(pathIn)));

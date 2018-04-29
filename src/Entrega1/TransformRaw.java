@@ -14,7 +14,7 @@ public class TransformRaw {
 	/**
 	 * Transforma el espacio de atributos del conjunto de entrenamiento a BoW o TF-IDF.
 	 *
-	 * @param args Parámetros de entrada.
+	 * @param args Parámetros de entrada. En caso de no introducir ninguno se muestra una descripción de estos.
 	 */
 	public static void main(String[] args) throws Exception {
 

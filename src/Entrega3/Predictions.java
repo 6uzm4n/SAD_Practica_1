@@ -12,7 +12,13 @@ import java.io.FileWriter;
 
 public class Predictions {
 
-	public static void main(String[] args) throws Exception{
+	/**
+	 * Clasifica un conjunto de instancias usando un clasificador baseline y un clasificador SVM y escribe los resultados
+	 * en dos archivos de texto.
+	 *
+	 * @param args  Parámetros de entrada. En caso de no introducir ninguno se muestra una descripción de estos.
+	 */
+	public static void main(String[] args){
 		String pathIn = "";
 		String pathBaseline = "";
 		String pathSVM = "";
@@ -52,6 +58,14 @@ public class Predictions {
 		predictClass(data, baseline, pathOut + "TestPredictionsBaseline.txt");
 	}
 
+	/**
+	 * Dado un conjunto de instancias, un clasificador y un path de un archivo de texto, clasifica las instancias
+	 * mediante el clasificador y escribe los resultados obtenidos en el archivo de texto indicado.
+	 *
+	 * @param data			Conjunto de instancias a clasificar.
+	 * @param classifier	Clasificador a utilizar.
+	 * @param pathOut		Archivo en el que escribir los resultados obtenidos.
+	 */
 	private static void predictClass(Instances data, Classifier classifier, String pathOut) {
 		StringBuilder output = new StringBuilder();
 		output.append("INSTANCIA	CLASE REAL	CLASE PREDICHA\n");

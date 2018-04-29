@@ -12,14 +12,10 @@ import weka.filters.supervised.attribute.AttributeSelection;
 
 public class FssInfoGain {
 	/**
-	 * FssInfoGain sirve para realizar una seleccion de atributos dado un conjunto
-	 * de datos en un fichero .arff, y genera uno nuevo una vez realizada esta
-	 * selección. La selección de atributos consiste en la eliminación de atributos
-	 * redundante e irrelevantes.
+	 * Realiza una selección de atributos dado un conjunto de datos en un fichero .arff, y genera un nuevo
+	 * fichero con sus atributos reducidos.
 	 *
-	 * @param args
-	 *            Parámetros de entrada args[0] - ruta del fichero .arff sobre la
-	 *            cual se quiere trabajar args[1] - ruta del fichero .arff de salida
+	 * @param args	Parámetros de entrada. En caso de no introducir ninguno se muestra una descripción de estos.
 	 */
 	public static void main(String[] args) {
 		String pathIn = null;
@@ -51,12 +47,11 @@ public class FssInfoGain {
 	}
 
 	/**
-	 * Realiza una seleccion de atributos, en concreto, elimina algunos atributos,
-	 * recorre el parámetro threshold para obtener el valor óptimo. Se detendrá en
-	 * el momento en el que el número de atributos se reduzca.
+	 * Realiza una seleccion de atributos, en concreto, elimina algunos atributos redundantes o irrelevantes. Recorre el
+	 * parámetro threshold para obtener el valor óptimo. Se detendrá en el momento en el que el número de atributos se
+	 * reduzca al máximo posible.
 	 * 
-	 * @param data
-	 *            instancias sobre las cuales aplicar la seleccion de tributos
+	 * @param data	Conjunto de nstancias sobre las cuales aplicar la selección de atributos.
 	 */
 	public static Instances useFilter(Instances data) throws Exception {
 		AttributeSelection attSel = new AttributeSelection();

@@ -10,7 +10,11 @@ import weka.core.converters.ConverterUtils.DataSource;
 
 public class GetModel {
 
-
+    /**
+     * Genera un modelo SVM optimizado para un conjunto de instancias dado.
+     *
+     * @param args  Parámetros de entrada. En caso de no introducir ninguno se muestra una descripción de estos.
+     */
     public static void main(String[] args) throws Exception {
     	 String Instancias = null;
          String atributoKernel=  null;
@@ -61,32 +65,29 @@ public class GetModel {
     }
 
     /**
-     * Escribe los resultados de realizar con el algoritmo SVM empleando el 10-FoldCrossValidation y el Resubstitution error, así como el propio modelo
+     * Escribe los resultados de realizar con el algoritmo SVM empleando el 10-FoldCrossValidation y guarda el modelo en
+     * el directorio dado.
      *
-     * @param trainedData instancias con las que evaluar
-     * @param atributoExponente atributo optimo para generar el clasificador
-     * @param pathToSaveModel ruta donde guardar el modelo generado
-     * @param pathToWrite carpeta donde guardar los archivos generados
+     * @param trainedData       Instancias con las que evaluar.
+     * @param atributoExponente Exponente optimo para generar el clasificador SVM.
+     * @param pathToSaveModel   Ruta donde guardar el modelo generado.
+     * @param pathToWrite       Carpeta donde guardar los archivos generados.
      */
     private static void getModel(Instances trainedData, double atributoExponente, String pathToSaveModel,String pathToWrite) throws Exception {
         Classifier ClassifierSMO = getSMO(atributoExponente);
 
         Evaluation evalKFold = CommonUtilities.evalKFoldCrossValidation(ClassifierSMO, trainedData, 10, 1);
         CommonUtilities.writeQuality(evalKFold, pathToWrite + trainedData.relationName() + "_SVM_k-fold_quality.txt");
-
         ClassifierSMO.buildClassifier(trainedData);
-        Evaluation evalResubstitution = new Evaluation(trainedData);
-        evalResubstitution.evaluateModel(ClassifierSMO, trainedData);
-        CommonUtilities.writeQuality(evalResubstitution, pathToWrite + trainedData.relationName() + "_SVM_resubstitution_quality.txt");
         CommonUtilities.saveModel(ClassifierSMO, pathToSaveModel);
 
     }
 
     /**
-     * Devuelve el clasificador del tipo SVM creado con los valores optimos
+     * Devuelve el clasificador del tipo SVM creado con los valores óptimos.
      *
-     * @param atributoExponente atributo optimo para generar el clasificador
-     * @return el objeto Clasificador
+     * @param atributoExponente Atributo optimo para generar el clasificador SVM.
+     * @return                  Classificador generado.
      */
 
     private static Classifier getSMO(double atributoExponente){
