@@ -10,6 +10,7 @@ import weka.filters.unsupervised.attribute.*;
 import weka.filters.unsupervised.instance.SparseToNonSparse;
 
 public class TransformRaw {
+
 	/**
 	 * Transforma el espacio de atributos del conjunto de entrenamiento a BoW o TF-IDF.
 	 *
@@ -18,21 +19,20 @@ public class TransformRaw {
 	public static void main(String[] args) throws Exception {
 
 		if (args.length == 0) {
-			System.out.println("=====TRANSFORM RAW=====");
-			System.out.println(
-					"Este programa tiene como función transformar el espacio de atributos del conjunto de entrenamiento a BoW o TF�IDF.");
+			System.out.println("=====Transform Raw=====");
+			System.out.println("Este programa tiene como función transformar el espacio de atributos del conjunto de entrenamiento a BoW o TF�IDF.");
 			System.out.println("Este programa necesita que introduzcas 5 argumentos para funcionar correctamente.");
-			System.out.println(
-					"PRECONDICIONES:\nEl primer argumento será el path del conjunto de entrenamiento a transformar. "
-							+ "El segundo es el path destino. El tercero indicará si queremos transformar a BoW o TF-IDF, los valores válidos: 'BOW' , 'TF-IDF'."
-							+ "El cuarto indicará si queremos una representación Sparse o NonSparse, los valores válidos: 'True' , 'False'"+
-							"Y el último será el path donde guardar el diccionario generado");
-			System.out.println(
-					"POSTCONDICIONES:\nEl resultado de esta aplicación será una representación BoW o TF-IDF del espacio de atributos del conjunto de entrenamiento ");
-			System.out.println("Lista de argumentos:\n" + "-- Path del conjunto de entrenamiento a transformar."
-					+ "\n-- Path de salida." + "\n-- Opción BoW o TF-IDF" + "\n-- ¿Opción Sparse?"+"\n-- Path del diccionario generado");
-			System.out.println(
-					"Ejemplo de una correcta ejecución: java -jar Entrega1.TransformRaw.jar /path/to/train.arff /path/to/trainBOW.arff BOW NonSparse /path/to/diccionario");
+			System.out.println("PRECONDICIONES:\nEl primer argumento será el path del conjunto de entrenamiento a transformar. " +
+					"El segundo es el path destino. El tercero indicará si queremos transformar a BoW o TF-IDF," +
+					" los valores válidos: 'BOW' , 'TF-IDF'. El cuarto indicará si queremos una representación Sparse o " +
+					"NonSparse, los valores válidos: 'True' , 'False'. Y el último será el path donde guardar el diccionario generado");
+			System.out.println("POSTCONDICIONES:\nEl resultado de esta aplicación será una representación BoW o TF-IDF del espacio de atributos del conjunto de entrenamiento.\n");
+			System.out.println("Lista de argumentos:\n-Path del conjunto de entrenamiento a transformar.\n" +
+													"-Path de salida.\n" +
+													"-Opción BoW o TF-IDF: BOW/TF-IDF.\n" +
+													"-Opción Sparse: true/false.\n" +
+													"-Path del diccionario generado.");
+			System.out.println("Ejemplo de una correcta ejecución: java -jar TransformRaw.jar /path/to/train.arff /path/to/trainBOW.arff BOW NonSparse /path/to/diccionario");
 			System.exit(0);
 		} else {
 			String pathIn = "";

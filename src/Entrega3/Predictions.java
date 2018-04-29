@@ -25,15 +25,15 @@ public class Predictions {
 		if (args.length == 0) {
 			System.out.println("=====Predictions=====");
 			System.out.println("Este programa tiene como función predecir la clase de las instancias de un documento dado con un modelo binario.");
-			System.out.println("Este programa necesita introducir 4 argumentos.");
+			System.out.println("Este programa necesita que introduzcas 4 argumentos.");
 			System.out.println("PRECONDICIONES:\nEl archivo usado para la predicción será de formato .arff");
-			System.out.println("POSTCONDICIONES:\nEl resultado de este algoritmo serán las instancias, clase real y clase estimada "
-					+ "del conjunto de test con cada uno de los dos algoritmos considerados.");
-			System.out.println("Lista de argumentos:\n" + "Argumento 1: Path de origen del documento a predecir"
-														+ "Argumento 2: Path de origen del modelo Baseline"
-														+ "Argumento 3: Path de origen del modelo SVM"
-														+ "Argumento 4: Path de destino de los resultados.");
-			System.out.println("Ejemplo de una correcta ejecuci�n: java -jar Predictions.jar /path/to/data.arff /path/to/model_baseline /path/to/model_SVM /path/to/destination/");
+			System.out.println("POSTCONDICIONES:\nEl resultado de este programa serán las instancias, clase real y clase estimada "
+					+ "del conjunto de test con cada uno de los dos algoritmos considerados.\n");
+			System.out.println("Lista de argumentos:\n-Path de origen del documento a predecir.\n" +
+													"-Path de origen del modelo Baseline.\n" +
+													"-Path de origen del modelo SVM.\n" +
+													"-Path de destino de los resultados.");
+			System.out.println("Ejemplo de una correcta ejecución: java -jar Predictions.jar /path/to/data.arff /path/to/model_baseline /path/to/model_SVM /path/to/destination/");
 			System.exit(0);
 		}else if(args.length == 4){
 			try {

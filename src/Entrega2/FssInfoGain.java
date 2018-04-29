@@ -8,6 +8,7 @@ import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
 
 public class FssInfoGain {
+
 	/**
 	 * Realiza una selección de atributos dado un conjunto de datos en un fichero .arff, y genera un nuevo
 	 * fichero con sus atributos reducidos.
@@ -18,11 +19,16 @@ public class FssInfoGain {
 		String pathIn = null;
 		String pathOut = null;
 		if (args.length == 0){
-			System.out.println("Este programa tiene como función descartar atributos redundantes o irrelevantes para el proceso de clasificación\n"
-					+ "El archivo .arff original debe tener por lo menos un atributo de tipo String.\n"
-					+ "Este programa espera dos argumentos:\n" + "\t1 - Ruta del fichero .arff de entrada\n"
-					+ "\t2 - Ruta del fichero .arff de salida\n"
-					+ "\nEjemplo: java -jar FssInfoGain.jar /path/to/input/arff /path/to/output/arff");
+			System.out.println("=====FssInfoGain=====");
+			System.out.println("Este programa tiene como función descartar atributos redundantes o irrelevantes para el proceso de clasificación");
+			System.out.println("Este programa necesita que introduzcas 2 argumentos.");
+			System.out.println("PRECONDICIONES:\nEl archivo usado para la predicción será de formato .arff. El archivo " +
+					".arff original debe tener por lo menos un atributo de tipo String.");
+			System.out.println("POSTCONDICIONES:\nEl resultado de este programa serán las instancias originales con un " +
+					"número reducido de atributos.\n");
+			System.out.println("Lista de argumentos:\n-Ruta del fichero .arff de entrada.\n"
+												   + "-Ruta del fichero .arff de salida.");
+			System.out.println("Ejemplo de una correcta ejecución: java -jar FssInfoGain.jar /path/to/input/arff /path/to/output/arff");
 			System.exit(1);
 		} else if (args.length == 2) {
 			pathIn = args[0];

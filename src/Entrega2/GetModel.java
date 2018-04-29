@@ -22,16 +22,15 @@ public class GetModel {
          String pathWrite = null;
         try{
             if (args.length == 0){
-                System.out.println("=====================================================================");
+                System.out.println("=====Get Model=====");
                 System.out.println("Este programa tiene como función generar un modelo Support Vector Machine óptimo dado un conjunto de instancias.");
                 System.out.println("PRECONDICIÓN: El path donde se desea guardar el modelo debe ser un directorio.");
-                System.out.println("POSCONDICIÓN: Se han creado tanto SVM.model como SVM_quality.txt");
-                System.out.println("ARGUMENTOS:\n--El conjunto de instancias con las que evaluar." +
-                                   "\n--El atributo optimo para generar el clasificador empleando el algoritmo SVM" +
-                                   "\n--La ruta donde guardar el modelo generado." +
-                                   "\n-- Path donde se desea guardar tanto el modelo como su calidad estimada.");
-                System.out.println("EJEMPLO DE USO: \"java -jar GetModel.jar /path/to/data.arff numero_optimo  /path/to/model/ /path/to/destination/\"");
-                System.out.println("=====================================================================");
+                System.out.println("POSCONDICIÓN: Se han creado tanto SVM.model como SVM_quality.txt.\n");
+                System.out.println("Lista de argumentos:\n-El conjunto de instancias con las que evaluar.\n" +
+                                   "-El atributo optimo para generar el clasificador empleando el algoritmo SVM.\n" +
+                                   "-La ruta donde guardar el modelo generado.\n" +
+                                   "-Path donde se desea guardar tanto el modelo como su calidad estimada.");
+                System.out.println("Ejemplo de una correcta ejecución: java -jar GetModel.jar /path/to/data.arff numero_optimo  /path/to/model/ /path/to/destination/");
 
                         System.exit(0);
             }else if (args.length == 4) {

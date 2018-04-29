@@ -19,30 +19,37 @@ public class MakeCompatibleFss {
 	 * @param args	Parámetros de entrada. En caso de no introducir ninguno se muestra una descripción de estos.
 	 */
 	public static void main(String[] args){
-		//gestionar parámetros
-		String pathFss = null;
-		String pathRaw = null;
-		String pathNewFss = null;
-		try {
+		String pathFss = "";
+		String pathRaw = "";
+		String pathNewFss = "";
+		if (args.length == 0){
+			System.out.println("=====Predictions=====");
+			System.out.println("Este programa hace que el espacio de atributos del conjunto de evaluacion sea compatible con el de entrenamiento.");
+			System.out.println("Este programa necesita que introduzcas 3 argumentos.");
+			System.out.println("PRECONDICIONES:\nEl archivo usado para la predicción será de formato .arff y tener un " +
+					"atributo de tipo String");
+			System.out.println("POSTCONDICIONES:\nEl resultado de este programa serán las instancias, clase real y clase estimada "
+					+ "del conjunto de test con cada uno de los dos algoritmos considerados.\n");
+			System.out.println("Lista de argumentos:\n-Ruta del fichero .arff de referencia\n" +
+					"-Ruta del fichero .arff para compatibilizar.\n" +
+					"-Ruta del fichero .arff compatible de salida");
+			System.out.println("Ejemplo de una correcta ejecución: java -jar MakeCompatibleFss.jar /path/to/input/trainFss /path/to/input/dev /path/to/input/devFSSCompatible");
+
+		}else if (args.length == 3){
 			pathFss = args[0];
 			pathRaw = args[1];
 			pathNewFss = args[2];
-		} catch (IndexOutOfBoundsException e) {
-			String q = "Este programa hace que el espacio de atributos del conjunto de evaluacion sea compatible con el de entrenamiento\n"
-					+ "El fichero .arff a convertir debe tener al menos un atributo de tipo String.\n"
-					+ "Este programa espera 3 argumentos:\n" + "\t1 - Ruta del fichero .arff de referencia\n"
-					+ "\t2 - Ruta del fichero .arff para compatibilizar\n"
-					+ "\t3 - Ruta del fichero .arff compatible de salida\n"
-					+ "\nEjemplo: java -jar MakeCompatibleFss.jar /path/to/input/trainFss /path/to/input/dev /path/to/input/devFSSCompatible";
-			System.out.println(q);
+		}else{
+			CommonUtilities.printlnError("Error en el input. Revise su sintaxis.");
 			System.exit(1);
 		}
-		try {
-			makeCompatible(pathFss, pathRaw, pathNewFss);
-		} catch (Exception e) {
 
-			System.out.println("Argumentos incorrectos");
+		try{
+			makeCompatible(pathFss, pathRaw, pathNewFss);
+		}catch (Exception e){
+			CommonUtilities.printlnError("Error en los ficheros de entrada.");
 			e.printStackTrace();
+			System.exit(1);
 		}
 	}
 

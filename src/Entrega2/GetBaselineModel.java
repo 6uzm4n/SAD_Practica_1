@@ -21,14 +21,13 @@ public class GetBaselineModel {
         String modelPath = null;
         try{
             if (args.length == 0){
-                System.out.println("=====================================================================");
+                System.out.println("=====Get Baseline Model=====");
                 System.out.println("Este programa tiene como función generar un modelo NaiveBayes óptimo dado un conjunto de instancias.");
                 System.out.println("PRECONDICIÓN: El path donde se desea guardar el modelo debe ser un directorio.");
-                System.out.println("POSCONDICIÓN: Se han creado tanto baseline.model como baseline_quality.txt");
-                System.out.println("ARGUMENTOS:\n--Path del conjunto de datos de entrenamiento del modelo." +
-                        "\n--Path donde se desea guardar tanto el modelo como su calidad estimada.");
-                System.out.println("EJEMPLO DE USO: \"java -jar GetBaselineModel.jar /path/to/data.arff /path/to/destination/\"");
-                System.out.println("=====================================================================");
+                System.out.println("POSCONDICIÓN: Se han creado tanto baseline.model como baseline_quality.txt.\n");
+                System.out.println("Lista de argumentos:\n-Path del conjunto de datos de entrenamiento del modelo.\n" +
+                                                 "-Path donde se desea guardar tanto el modelo como su calidad estimada.");
+                System.out.println("Ejemplo de una correcta ejecución: java -jar GetBaselineModel.jar /path/to/data.arff /path/to/destination/");
 
                         System.exit(0);
             }else if (args.length == 2) {

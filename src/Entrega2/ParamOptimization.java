@@ -16,17 +16,13 @@ public class ParamOptimization {
 	public static void main(String[] args){
 
         if (args.length == 0) {
-        	System.out.println("=====ParamOptimization=====");
-			System.out.println(
-					"Este programa tiene como función obtener los parámetros óptimos para el modelo Support Vector Machine.");
+        	System.out.println("=====Param Optimization=====");
+			System.out.println("Este programa tiene como función obtener los parámetros óptimos para el modelo Support Vector Machine.");
 			System.out.println("Este programa necesita introducir 1 argumento para funcionar correctamente.");
-			System.out.println(
-					"PRECONDICIONES:\nEl primer y único argumento será el path del conjunto de entrenamiento que usaremos posteriormente");
-			System.out.println(
-					"POSTCONDICIONES:\nEl resultado de esta aplicación serán los parámetros óptimos para el modelo Support Vector Machine.");
-			System.out.println("Lista de argumentos:\n" + "-- Path del conjunto de datos del que sacar los parámetros óptimos.");
-			System.out.println(
-					"Ejemplo de una correcta ejecución: java -jar ParamOptimization.jar /path/to/train.arff");
+			System.out.println("PRECONDICIONES:\nEl primer y único argumento será el path del conjunto de entrenamiento que usaremos posteriormente.");
+			System.out.println("POSTCONDICIONES:\nEl resultado de esta aplicación serán los parámetros óptimos para el modelo Support Vector Machine.\n");
+			System.out.println("Lista de argumentos:\n-Path del conjunto de datos del que sacar los parámetros óptimos.");
+			System.out.println("Ejemplo de una correcta ejecución: java -jar ParamOptimization.jar /path/to/train.arff");
 			System.exit(0);
         }else{
         	

@@ -37,12 +37,12 @@ public class GetRaw {
             String pathOut = args[2];
             getRawPlain(pathIn, pathOut);
         }else if (args.length == 0) {
-            System.out.println("=====GET RAW=====");
+            System.out.println("=====Get Raw=====");
             System.out.println("Este programa tiene como función obtener un fichero .arff para su uso en minería de datos " +
                     "a partir de diversos tipos de archivos.");
             System.out.println("Este programa necesita que introduzcas 3 argumentos para funcionar correctamente.");
-            System.out.println("PRECONDICIONES:\nEl primer argumento será el path de la raíz del árbol de directorios a " +
-                    "convertir. El segundo es el path del fichero de salida \".arff\".");
+            System.out.println("PRECONDICIONES:\nEl primer argumento será el tipo de archivo de entrada. El segundo " +
+                    "argumento será el path del fichero o directorio a convertir. El tercero es el path del fichero de salida.");
             System.out.println("POSTCONDICIONES:\nEl resultado de esta aplicación será la creación de un fichero .arff " +
                     "en el path especificado en los argumentos\n");
             System.out.println("Lista de argumentos:\n--Opción para el input:\n   -d\tLa estructura de los ficheros es por directorios." +
