@@ -11,14 +11,9 @@ import weka.filters.unsupervised.attribute.Reorder;
 
 public class MakeCompatible {
 	/**
-	 * Hace compatible un conjunto de evaluaci�n representandolo en un espacio de
-	 * atributos compatible con el del entrenamiento
+	 * Hace compatible un conjunto de evaluación representándolo en un espacio de atributos compatible con el de entrenamiento.
 	 *
-	 * @param args
-	 *            Parámetros de entrada
-	 * @throws Exception
-	 *             Si no se pueden obtener correctamente las instancias a partir de
-	 *             los ficheros de entrada
+	 * @param args 			Parámetros de entrada.
 	 */
 	public static void main(String[] args) throws Exception {
 		if (args.length == 0) {

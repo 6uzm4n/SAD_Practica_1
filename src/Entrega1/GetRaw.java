@@ -20,10 +20,7 @@ public class GetRaw {
 	/**
 	 * Crea un archivo arff a partir de un directorio de ficheros (raw).
 	 *
-	 * @param args
-	 *            Parámetros de entrada
-	 * @throws IOException
-     *             Si no se puede leer o escribir un archivo.
+	 * @param args          Parámetros de entrada.
 	 */
 	public static void main(String[] args) throws IOException {
 
@@ -62,10 +59,10 @@ public class GetRaw {
     }
 
 	/**
-     * Este método crea un archivo arff en la ruta pathOut a partir del directorio de archivos de texto raw leído en la
-     * ruta pathIn.
+     * Este método crea un archivo arff en la ruta pathOut a partir de los archivos de texto plano ubicados en el árbol
+     * de directorios de la ruta pathIn. Las carpetas de este árbol serán la clase asignada.
      *
-     * @param pathIn        Ruta en la que está ubicado el directorio de archivos raw.
+     * @param pathIn        Ruta en la que está ubicado el directorio de archivos de texto plano.
      * @param pathOut       Ruta en la que se crea el nuevo archivo arff,
      * @throws IOException  Si no se puede leer o escribir un archivo.
      */
@@ -84,10 +81,10 @@ public class GetRaw {
     }
 
     /**
-     * Este método crea un archivo arff en la ruta pathOut a partir del archivo CSV que se encuentra en la ruta pathIn.
+     * Este método crea un archivo arff en la ruta pathOut a partir del archivo CSV que ubicado en la ruta pathIn.
      *
-     * @param pathIn        Ruta en la que está ubicado el directorio de archivos raw.
-     * @param pathOut       Ruta en la que se crea el nuevo archivo arff,
+     * @param pathIn    Ruta en la que está ubicado el directorio de archivos raw.
+     * @param pathOut   Ruta en la que se crea el nuevo archivo arff,
      */
     private static void getRawCSV (String pathIn, String pathOut){
         //Este método está personalizado para el archivo de pruebas "Tweets", por lo que no es útil con otros archivos.
@@ -136,8 +133,7 @@ public class GetRaw {
     }
 
     /**
-     * Este método crea un archivo arff en la ruta pathOut a partir del archivo de texto plano que se encuentra en la
-     * ruta pathIn.
+     * Este método crea un archivo arff en la ruta pathOut a partir del archivo de texto plano ubicado en la ruta pathIn.
      *
      * @param pathIn        Ruta en la que está ubicado el archivo de texto plano.
      * @param pathOut       Ruta en la que se crea el nuevo archivo arff,
@@ -165,11 +161,11 @@ public class GetRaw {
     }
 
     /**
-     * Este método limpia y corrige el contenido de un fichero CSV y guarda el resultado en un nuevo archivo ubicado
-     * en el directorio /tmp/. Devuelve el path del nuevo archivo creado.
+     * Este método limpia y corrige el contenido corrupto de un fichero CSV y guarda el resultado en un nuevo archivo
+     * ubicado en el directorio original. Devuelve el path del nuevo archivo creado.
      *
-     * @param path      Ruta en la que está ubicado el fichero CSV que se desea limpiar.
-     * @return          Ruta en la que está ubicado el nuevo fichero CSV limpio.
+     * @param path  Ruta en la que está ubicado el fichero CSV que se desea limpiar.
+     * @return      Ruta en la que está ubicado el nuevo fichero CSV limpiado.
      */
     private static String parseCSV (String path){
         String newPath = path + ".tmp";
@@ -213,8 +209,8 @@ public class GetRaw {
      * Este método lee los valores que contiene una linea de texto en formato CSV y los devuelve como un array de datos
      * en formato String.
      *
-     * @param line      Linea en formato CSV de la que se quieren leer los datos.
-     * @return          Array de Strings que contiene los valores de la liena leída.
+     * @param line  Linea en formato CSV de la que se quieren leer los datos.
+     * @return      Array de Strings que contiene los valores de la línea leída.
      */
     private static String[] getValuesCSV (String line){
         String[] splitedLine;

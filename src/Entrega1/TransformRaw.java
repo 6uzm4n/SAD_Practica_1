@@ -12,14 +12,9 @@ import weka.filters.unsupervised.instance.SparseToNonSparse;
 
 public class TransformRaw {
 	/**
-	 * Transforma el espacio de atributos del conjunto de entrenamiento a BoW o
-	 * TF�IDF
+	 * Transforma el espacio de atributos del conjunto de entrenamiento a BoW o TF-IDF.
 	 *
-	 * @param args
-	 *            Par�metros de entrada
-	 * @throws Exception
-	 *             Si no se pueden obtener correctamente las instancias a partir de
-	 *             los ficheros de entrada
+	 * @param args Parámetros de entrada.
 	 */
 	public static void main(String[] args) throws Exception {
 
